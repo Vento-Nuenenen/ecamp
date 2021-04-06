@@ -18,18 +18,18 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$file_id = $_REQUEST['file_id'];
+    $file_id = $_REQUEST['file_id'];
 
-	$query = "	SELECT *
+    $query = "SELECT *
 				FROM event_document
 				WHERE id = " . $file_id;
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$document = mysqli_fetch_assoc( $result );
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $document = mysqli_fetch_assoc($result);
 
-	header( 'Content-Type: application/force-download' );
-	header( 'Content-Type: ' . $document['type'] );
-	header('Content-Length: ' . $document['size'] );
-	header('Content-disposition: attachment; filename="'.$document['filename'].'"');
-	
-	echo implode( "", readfile( $document['name'] ) );
-	die();
+    header('Content-Type: application/force-download');
+    header('Content-Type: ' . $document['type']);
+    header('Content-Length: ' . $document['size']);
+    header('Content-disposition: attachment; filename="'.$document['filename'].'"');
+    
+    echo implode("", readfile($document['name']));
+    die();

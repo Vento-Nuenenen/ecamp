@@ -18,39 +18,39 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$file_type['image/jpeg'] = 'icon_img.png';
-	$file_type['image/gif'] = 'icon_img.png';
-	
-	$file_type['application/pdf'] = 'icon_pdf.png';
-	$file_type['application/msword'] = 'icon_doc.png';
-	$file_type['application/vnd.ms-excel'] = 'icon_xls.png';
-	
-	$_page->html = new PHPTAL($GLOBALS['tpl_dir'] .'/application/event/file_upload_done.tpl');
-	
-	$event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['event_id'] );
-	$file_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['file_id'] );
-	
-	$_camp->event( $event_id ) || die( "error" );
-	
-	$query = "	SELECT 
-					*
+    $file_type['image/jpeg'] = 'icon_img.png';
+    $file_type['image/gif'] = 'icon_img.png';
+    
+    $file_type['application/pdf'] = 'icon_pdf.png';
+    $file_type['application/msword'] = 'icon_doc.png';
+    $file_type['application/vnd.ms-excel'] = 'icon_xls.png';
+    
+    $_page->html = new PHPTAL($GLOBALS['tpl_dir'] .'/application/event/file_upload_done.tpl');
+    
+    $event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_id']);
+    $file_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['file_id']);
+    
+    $_camp->event($event_id) || die("error");
+    
+    $query = "SELECT *
 				FROM
 					event_document
 				WHERE
 					event_document.id = " . $file_id;
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$file = mysqli_fetch_assoc( $result );
-	
-	if( $file_type[$file['type']] )
-	{	$file['type_img_src'] = "public/global/img/" . $file_type[$file['type']];	}
-	else
-	{	$file['type_img_src'] = "public/global/img/icon_unknown.png";	}
-	
-	$file['download_link'] = "index.php?app=event&cmd=file_download&file_id=" . $file['id'];
-	
-	$_page->html->set(	'file', $file );
-	$_page->html->set(	'event_id',  $event_id );
-	
-	$_js_env->add(	'file', 	$file );
-	//$_js_env->add(	'file_id', 	$file_id );
-	$_js_env->add(	'event_id', $event_id );
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $file = mysqli_fetch_assoc($result);
+    
+    if ($file_type[$file['type']]) {
+        $file['type_img_src'] = "public/global/img/" . $file_type[$file['type']];
+    } else {
+        $file['type_img_src'] = "public/global/img/icon_unknown.png";
+    }
+    
+    $file['download_link'] = "index.php?app=event&cmd=file_download&file_id=" . $file['id'];
+    
+    $_page->html->set('file', $file);
+    $_page->html->set('event_id', $event_id);
+    
+    $_js_env->add('file', $file);
+    //$_js_env->add(	'file_id', 	$file_id );
+    $_js_env->add('event_id', $event_id);

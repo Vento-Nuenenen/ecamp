@@ -18,13 +18,12 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$cat_content = "";
-	$query = "SELECT * FROM category WHERE camp_id = $_camp->id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	while($row = mysqli_fetch_assoc($result))
-	{
-		$cat_content .= "<tr bgcolor='#$row[color]'><td align='center'>". htmlentities_utf8($row['name']) ."</td></tr>";
-	}
-	
-	$_page->html->set( 'info_box_content', $cat_content );
-	$_page->html->set( 'info_box_title', "Blocktypen:" );
+    $cat_content = "";
+    $query = "SELECT * FROM category WHERE camp_id = $_camp->id";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cat_content .= "<tr bgcolor='#$row[color]'><td align='center'>". htmlentities_utf8($row['name']) ."</td></tr>";
+    }
+    
+    $_page->html->set('info_box_content', $cat_content);
+    $_page->html->set('info_box_title', "Blocktypen:");

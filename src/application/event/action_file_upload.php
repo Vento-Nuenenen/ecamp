@@ -18,24 +18,21 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['event_id'] );
-	$upload = $_FILES['upload'];
-	
-	$_camp->event( $event_id ) || die( "error" );
-	
-	$save_path = 'userfiles/event/' . $_user->id . '_' . md5( microtime(true) );
-	$file_name = $upload['name'];
-	
-	if( $upload['error'] != 0 )
-	{
-		header( "location: index.php?app=event&cmd=file_upload_form&event_id=" . $event_id );
-		die();
-	}
-	else
-	{
-		move_uploaded_file( $upload['tmp_name'], $save_path );
-		
-		$query = "	INSERT INTO
+    $event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_id']);
+    $upload = $_FILES['upload'];
+    
+    $_camp->event($event_id) || die("error");
+    
+    $save_path = 'userfiles/event/' . $_user->id . '_' . md5(microtime(true));
+    $file_name = $upload['name'];
+    
+    if ($upload['error'] != 0) {
+        header("location: index.php?app=event&cmd=file_upload_form&event_id=" . $event_id);
+        die();
+    } else {
+        move_uploaded_file($upload['tmp_name'], $save_path);
+        
+        $query = "INSERT INTO
 						event_document
 					(
 						`event_id`,
@@ -56,10 +53,10 @@
 						'" . $upload['size'] . "',
 						'" . time() . "'
 					)";
-		
-		mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-		$file_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
-		
-		header( "location: index.php?app=event&cmd=file_upload_done&event_id=" . $event_id ."&file_id=" . $file_id );
-		die();
-	}
+        
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        $file_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
+        
+        header("location: index.php?app=event&cmd=file_upload_done&event_id=" . $event_id ."&file_id=" . $file_id);
+        die();
+    }

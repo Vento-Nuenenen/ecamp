@@ -17,14 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-	
-	$filename = $GLOBALS['app_dir'] . "/program/del_protocol/" . $_user->id . ".log";
-	
-	if( $_page->app != "program" && $_page->app != "event" )
-	{
-		touch( 	$filename );
-		unlink( $filename );
-	}
-	
-?>
+    
+    $filename = $GLOBALS['app_dir'] . "/program/del_protocol/" . $_user->id . ".log";
+    
+    if ($_page->app != "program" && $_page->app != "event") {
+        touch($filename);
+        unlink($filename);
+    }

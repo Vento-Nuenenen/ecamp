@@ -18,36 +18,37 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	require '../../vendor/autoload.php';
-	use Phelium\Component\reCAPTCHA;
+    require '../../vendor/autoload.php';
+    use Phelium\Component\reCAPTCHA;
 
-	include("../config/config.php");
+    include("../config/config.php");
 
-	#############################################################################
+    #############################################################################
     # Register Error Handler
-	include_once($module_dir . "/error_handling.php");
-	
-	include($lib_dir . "/mysql.php");
-	include($lib_dir . "/functions/error.php");
-	
-	db_connect();
+    include_once($module_dir . "/error_handling.php");
+    
+    include($lib_dir . "/mysql.php");
+    include($lib_dir . "/functions/error.php");
+    
+    db_connect();
 
-	$captcha = new reCAPTCHA($GLOBALS['captcha_pub'], $GLOBALS['captcha_prv']);
+    $captcha = new reCAPTCHA($GLOBALS['captcha_pub'], $GLOBALS['captcha_prv']);
 
-	if( $_SESSION['skin'] == "" ) $_SESSION['skin'] = $GLOBALS['skin'];
-	$html = new PHPTAL("public/skin/".$_SESSION['skin']."/register.tpl");
-	
-	$html->setEncoding('UTF-8');
-	
-	$html->set('SHOW_MSG', false);
-	
-	if( isset( $_REQUEST[ 'msg' ] ) )
-	{
-		$html->set( 'SHOW_MSG', true );
-		$html->set( 'MSG', mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST[ 'msg' ] ) );
-	}
+    if ($_SESSION['skin'] == "") {
+        $_SESSION['skin'] = $GLOBALS['skin'];
+    }
+    $html = new PHPTAL("public/skin/".$_SESSION['skin']."/register.tpl");
+    
+    $html->setEncoding('UTF-8');
+    
+    $html->set('SHOW_MSG', false);
+    
+    if (isset($_REQUEST[ 'msg' ])) {
+        $html->set('SHOW_MSG', true);
+        $html->set('MSG', mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST[ 'msg' ]));
+    }
 
-	$html->set('captcha_script', $captcha->getScript());
-	$html->set('captcha_html', $captcha->getHtml());
+    $html->set('captcha_script', $captcha->getScript());
+    $html->set('captcha_html', $captcha->getHtml());
 
-	echo $html->execute();
+    echo $html->execute();

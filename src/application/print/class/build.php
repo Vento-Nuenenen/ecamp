@@ -18,38 +18,36 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	require_once( 'build_cover.php' );
-	require_once( 'build_picasso.php' );
-	require_once( 'build_daylist.php' );
-	require_once( 'build_day.php' );
-	require_once( 'build_event.php' );
-	require_once( 'build_toc.php' );
-	require_once( 'build_notes.php' );
+    require_once('build_cover.php');
+    require_once('build_picasso.php');
+    require_once('build_daylist.php');
+    require_once('build_day.php');
+    require_once('build_event.php');
+    require_once('build_toc.php');
+    require_once('build_notes.php');
 
-	class print_build_class
-	{
-		public $data;
-		
-		public $cover;
-		public $picasso;
-		public $day_list;
-		public $day;
-		public $event;
-		public $toc;
-		public $notes;
-		
-		function __construct( $data )
-		{
-			$this->data 	= $data;
-			
-			$this->cover 	= new print_build_cover_class( $this->data );
-			$this->picasso	= new print_build_picasso_class( $this->data );
-			$this->daylist	= new print_build_daylist_class( $this->data );
-			$this->day		= new print_build_day_class( $this->data );
-			$this->event	= new print_build_event_class( $this->data );
-			$this->toc		= new print_build_toc();
-			$this->notes    = new print_build_notes();
-		}
-	}
-	
-?>
+    class print_build_class
+    {
+        public $data;
+        
+        public $cover;
+        public $picasso;
+        public $day_list;
+        public $day;
+        public $event;
+        public $toc;
+        public $notes;
+        
+        public function __construct($data)
+        {
+            $this->data 	= $data;
+            
+            $this->cover 	= new print_build_cover_class($this->data);
+            $this->picasso	= new print_build_picasso_class($this->data);
+            $this->daylist	= new print_build_daylist_class($this->data);
+            $this->day		= new print_build_day_class($this->data);
+            $this->event	= new print_build_event_class($this->data);
+            $this->toc		= new print_build_toc();
+            $this->notes    = new print_build_notes();
+        }
+    }

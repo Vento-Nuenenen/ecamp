@@ -18,31 +18,24 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$user = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['add_user_id']);
-	$function = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['function_id']);
-	
-	$query = "SELECT * FROM user_camp WHERE user_id = '$user' AND camp_id = '$_camp->id'";
-	//die( $query );
-	
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	
-	
-	if( mysqli_num_rows($result) > 0)
-	{	
-		$ans = array("error" => true, "msg" => "Diese Person arbeitet beim ausgewählten Lager bereits mit. Solle diese nicht der Fall sein, kontaktiere bitte den Support." );
-		echo json_encode( $ans );
-		die();
-	}
-	
-	
-	$query = "INSERT INTO user_camp	(user_id ,camp_id ,function_id, invitation_id, active)
+    $user = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['add_user_id']);
+    $function = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['function_id']);
+    
+    $query = "SELECT * FROM user_camp WHERE user_id = '$user' AND camp_id = '$_camp->id'";
+    //die( $query );
+    
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        $ans = array("error" => true, "msg" => "Diese Person arbeitet beim ausgewählten Lager bereits mit. Solle diese nicht der Fall sein, kontaktiere bitte den Support." );
+        echo json_encode($ans);
+        die();
+    }
+
+    $query = "INSERT INTO user_camp	(user_id ,camp_id ,function_id, invitation_id, active)
 			  VALUES ('$user', '$_camp->id', '$function','$_user->id','0')";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	
-	
-	$ans = array("error" => false, "msg" => "Die Person wurde dem Lager eingeladen. Sie muss die Einladung erst annehmen, bevor sie mitarbeiten kann." );
-	echo json_encode( $ans );
-	die();
-?>
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+
+    $ans = array("error" => false, "msg" => "Die Person wurde dem Lager eingeladen. Sie muss die Einladung erst annehmen, bevor sie mitarbeiten kann." );
+    echo json_encode($ans);
+    die();

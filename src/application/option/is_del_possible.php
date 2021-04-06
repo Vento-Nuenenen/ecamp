@@ -18,36 +18,34 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$cat_id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['category_id']);
-	
-	$_camp->category( $cat_id ) || die( "error" );
+    $cat_id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['category_id']);
+    
+    $_camp->category($cat_id) || die("error");
 
-	$query = "SELECT * FROM category WHERE id = '$cat_id' AND camp_id='$_camp->id'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	if( mysqli_num_rows($result) == 0 )
-	{
-		// Keine Berechtigung oder Kategorie existiert nicht
-		$ans = array( "error" => true, "msg" => "Keine Berechtigung" );
-		echo json_encode( $ans );
-		die();
-	}
-	
-	$category = mysqli_fetch_assoc($result);
-	
-	$query = "SELECT id FROM event WHERE category_id='$category[id]'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$num_failure = mysqli_num_rows( $result );
-	
-	if( $num_failure > 0 )
-	{
-	    // Es existieren Events zu dieser Kategorie
+    $query = "SELECT * FROM category WHERE id = '$cat_id' AND camp_id='$_camp->id'";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (mysqli_num_rows($result) == 0) {
+        // Keine Berechtigung oder Kategorie existiert nicht
+        $ans = array( "error" => true, "msg" => "Keine Berechtigung" );
+        echo json_encode($ans);
+        die();
+    }
+    
+    $category = mysqli_fetch_assoc($result);
+    
+    $query = "SELECT id FROM event WHERE category_id='$category[id]'";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $num_failure = mysqli_num_rows($result);
+    
+    if ($num_failure > 0) {
+        // Es existieren Events zu dieser Kategorie
 
-		$ans = array( "error" => false, "del" => false, "msg" => "Diese Kategory kann nicht gelöscht werden, da ihr $num_failure Programmblöcke zugeordnet sind. Bitte lösche erst die Blöcke, oder weise ihnen eine andere Kategorie zu, und wiederhole dann den Löschvorgang" );
-		echo json_encode( $ans );
-		die();
-	}
-	
-	$ans = array( "error" => false, "del" => true );
-	echo json_encode( $ans );
-	die();
+        $ans = array( "error" => false, "del" => false, "msg" => "Diese Kategory kann nicht gelöscht werden, da ihr $num_failure Programmblöcke zugeordnet sind. Bitte lösche erst die Blöcke, oder weise ihnen eine andere Kategorie zu, und wiederhole dann den Löschvorgang" );
+        echo json_encode($ans);
+        die();
+    }
+    
+    $ans = array( "error" => false, "del" => true );
+    echo json_encode($ans);
+    die();

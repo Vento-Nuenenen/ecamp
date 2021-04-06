@@ -18,52 +18,41 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	// Daten auslesen
-	$pid  = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['pid']);
-	$text = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['text']);
-	$text_js = htmlentities_utf8($_REQUEST['text']);
-	
-	$id   = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
-	
-	$del   = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['del']);
-	$new  = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['new']);
-	$edit  = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['edit']);
+    // Daten auslesen
+    $pid = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['pid']);
+    $text = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['text']);
+    $text_js = htmlentities_utf8($_REQUEST['text']);
+    
+    $id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
+    
+    $del = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['del']);
+    $new = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['new']);
+    $edit = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['edit']);
 
-	// Neues Ziel
-	if( $new == 1  )
-	{
-		if( $pid == "" ) $pid = "NULL";
-		
-		$query = "INSERT INTO `course_aim` (`id` ,`pid` ,`camp_id` ,`aim` )
-					VALUES (NULL , $pid , $_camp->id, '$text' );";
-		mysqli_query($GLOBALS["___mysqli_ston"], $query);
-		$id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
-	}
-	
-	// Ziel löschen
-	else if( $del == 1 )
-	{
-		$_camp->course_aim( $id ) || die( "error" );
-		
-		$query = "DELETE FROM course_aim WHERE id='$id' AND camp_id='$_camp->id' LIMIT 1;";
-		mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	}
-	
-	// Ziel ändern
-	else if( $edit == 1 )
-	{
-		$_camp->course_aim( $id ) || die( "error" );
-		
-		$query = "UPDATE course_aim SET aim='$text' WHERE id='$id' AND camp_id='$_camp->id' LIMIT 1;";
-		mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	}
-	
-	// Fehler
-	else
-	{
-		$error = true;
-	}
-	
-	$ans = array( "error" => $error, "text" => $text_js, "pid" => $pid, "new" => $new, "id" => $id );
-	echo json_encode($ans);
-	die();
+    // Neues Ziel
+    if ($new == 1) {
+        if ($pid == "") {
+            $pid = "NULL";
+        }
+        
+        $query = "INSERT INTO `course_aim` (`id` ,`pid` ,`camp_id` ,`aim`)
+					VALUES (NULL, $pid, $_camp->id, '$text');";
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        $id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
+    } elseif ($del == 1) { // Ziel löschen
+        $_camp->course_aim($id) || die("error");
+        
+        $query = "DELETE FROM course_aim WHERE id='$id' AND camp_id='$_camp->id' LIMIT 1;";
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    } elseif ($edit == 1) { // Ziel ändern
+        $_camp->course_aim($id) || die("error");
+        
+        $query = "UPDATE course_aim SET aim='$text' WHERE id='$id' AND camp_id='$_camp->id' LIMIT 1;";
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    } else { // Fehler
+        $error = true;
+    }
+    
+    $ans = array( "error" => $error, "text" => $text_js, "pid" => $pid, "new" => $new, "id" => $id );
+    echo json_encode($ans);
+    die();

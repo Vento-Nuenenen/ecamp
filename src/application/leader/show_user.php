@@ -18,15 +18,15 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
-	$_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/leader/show_user.tpl/show_user');
-	$_page->html->set('box_title', 'Leiterliste');
-	
-	$id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['id'] );
-	
-	$_camp->user( $id ) || die( "error" );
+    $_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
+    $_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/leader/show_user.tpl/show_user');
+    $_page->html->set('box_title', 'Leiterliste');
+    
+    $id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
+    
+    $_camp->user($id) || die("error");
 
-	$query = "	SELECT 
+    $query = "SELECT 
 					mail,
 					scoutname, 
 					firstname, 
@@ -46,73 +46,67 @@
 					user
 				WHERE
 					user.id = $id";
-					
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$user = mysqli_fetch_assoc( $result );
+                    
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $user = mysqli_fetch_assoc($result);
 
-	// Sex:
-	$query = "	SELECT	entry
+    // Sex:
+    $query = "SELECT entry
 				FROM	dropdown
 				WHERE	list = 'sex'
 				AND		item_nr = " . $user['sex'];
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( mysqli_num_rows( $result ) == 1 )
-	{
-		$sex_array = mysqli_fetch_assoc( $result );
-		$user['sex_str'] = $sex_array['entry'];
-		
-		$user['sex_symbol'] = ( $user['sex_str'] == "Weiblich" ) ? "&#9792;" : "&#9794;";
-	}
-	else
-	{
-		$user['sex_str'] = "";
-		$user['sex_symbol'] = "";
-	}
-	
-	// J+S Edu:
-	$query = "	SELECT 	entry
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $sex_array = mysqli_fetch_assoc($result);
+        $user['sex_str'] = $sex_array['entry'];
+        
+        $user['sex_symbol'] = ($user['sex_str'] == "Weiblich") ? "&#9792;" : "&#9794;";
+    } else {
+        $user['sex_str'] = "";
+        $user['sex_symbol'] = "";
+    }
+    
+    // J+S Edu:
+    $query = "SELECT entry
 				FROM 	dropdown
 				WHERE	list = 'jsedu'
 				AND		item_nr = '" . $user['jsedu'] . "'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( mysqli_num_rows( $result ) == 1 )
-	{
-		$jsedu_array = mysqli_fetch_assoc( $result );
-		$user['jsedu_str'] = $jsedu_array['entry'];
-	}
-	else
-	{	$user['jsedu_str'] = "";	}
-	
-	// PBS Edu:
-	$query = "	SELECT 	entry
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $jsedu_array = mysqli_fetch_assoc($result);
+        $user['jsedu_str'] = $jsedu_array['entry'];
+    } else {
+        $user['jsedu_str'] = "";
+    }
+    
+    // PBS Edu:
+    $query = "SELECT entry
 				FROM 	dropdown
 				WHERE	list = 'pbsedu'
 				AND		item_nr = '" . $user['pbsedu'] . "'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( mysqli_num_rows( $result ) == 1 )
-	{
-		$pbsedu_array = mysqli_fetch_assoc( $result );
-		$user['pbsedu_str'] = $pbsedu_array['entry'];
-	}
-	else
-	{	$user['pbsedu_str'] = "";	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $pbsedu_array = mysqli_fetch_assoc($result);
+        $user['pbsedu_str'] = $pbsedu_array['entry'];
+    } else {
+        $user['pbsedu_str'] = "";
+    }
 
-	// birthday:
-	$user['birthday_str'] = "";
-	
-	if( is_numeric( $user['birthday'] ) )
-	{
-		$date = new c_date();
-		
-		$date->setDay2000( $user[ 'birthday' ] );
-		$user['birthday_str'] = $date->getString( "d.m.Y" );
-	}
+    // birthday:
+    $user['birthday_str'] = "";
+    
+    if (is_numeric($user['birthday'])) {
+        $date = new c_date();
+        
+        $date->setDay2000($user[ 'birthday' ]);
+        $user['birthday_str'] = $date->getString("d.m.Y");
+    }
 
-	// Profile Pic:
-	$user[ 'avatar' ] = "index.php?app=user_profile&cmd=show_avatar&show_user_id=" . $id;
-	
-	$_page->html->set( 'user_detail', $user );
+    // Profile Pic:
+    $user[ 'avatar' ] = "index.php?app=user_profile&cmd=show_avatar&show_user_id=" . $id;
+    
+    $_page->html->set('user_detail', $user);

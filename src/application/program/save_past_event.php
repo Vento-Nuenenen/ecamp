@@ -18,29 +18,29 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	include( 'inc/get_program_update.php');
-	
-	$day_id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['day_id'] );
-	$time	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['time'] );
-	$start	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['start'] );
-	
-	$_camp->day( $day_id ) || die( "error" );
-	
-	
-	if( $start < $GLOBALS['time_shift'] )
-	{	$start += 24*60;	}
-	
-	$query = "	SELECT copyspace
+    include('inc/get_program_update.php');
+    
+    $day_id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['day_id']);
+    $time	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['time']);
+    $start	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['start']);
+    
+    $_camp->day($day_id) || die("error");
+    
+    
+    if ($start < $GLOBALS['time_shift']) {
+        $start += 24*60;
+    }
+    
+    $query = "SELECT copyspace
 				FROM user
 				WHERE user.id = $_user->id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$copy = mysqli_result( $result,  0,  'copyspace' );
-	
-	$copy = json_decode( $copy, true );
-	
-	if( $copy['type'] == "event_copy" )
-	{
-		$query = "	SELECT
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $copy = mysqli_result($result, 0, 'copyspace');
+    
+    $copy = json_decode($copy, true);
+    
+    if ($copy['type'] == "event_copy") {
+        $query = "SELECT
 						new_category.id
 					FROM
 						event,
@@ -68,8 +68,8 @@
 							ORDER BY category.form_type DESC
 						) as category
 					WHERE category.camp_id = $_camp->id";
-		
-		$query = "	SELECT
+        
+        $query = "SELECT
 						category.id
 					FROM
 						category,
@@ -88,12 +88,12 @@
 					WHERE
 						category.camp_id = $_camp->id
 					LIMIT 1";
-		$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-		
-		$i = 0;
-		$category_id = mysqli_result( $result,  0,  'id' );
-		
-		$query = "	INSERT INTO
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        
+        $i = 0;
+        $category_id = mysqli_result($result, 0, 'id');
+        
+        $query = "INSERT INTO
 						event
 					(camp_id, category_id, name, place, story, aim, method, topics, notes, seco, progress, in_edition_by, in_edition_time)
 					(
@@ -116,10 +116,10 @@
 						WHERE
 							event.id = " . $copy['event'] . "
 					)";
-		mysqli_query($GLOBALS["___mysqli_ston"], $query);
-		$new_event_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
-		
-		$query = "	INSERT INTO
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        $new_event_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
+        
+        $query = "INSERT INTO
 						event_instance
 					(event_id, day_id, starttime, length, dleft, width)	
 					(	SELECT
@@ -134,11 +134,10 @@
 						WHERE
 							id = " . $copy['event_instance'] . "
 					)";
-		mysqli_query($GLOBALS["___mysqli_ston"], $query);
-		
-		if( $category_id )
-		{
-			$query = "	INSERT INTO
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        
+        if ($category_id) {
+            $query = "INSERT INTO
 							event_detail
 						(event_id, prev_id, time, content, resp, sorting )
 						(
@@ -154,13 +153,12 @@
 							WHERE
 								event_detail.event_id = " . $copy['event'] . "
 						)";
-			mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-		}
-	}
-	
-	//header("Content-type: application/json");
-	
-	$ans = get_program_update( $time );
-	echo json_encode( $ans );
-	die();
-	
+            mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        }
+    }
+    
+    //header("Content-type: application/json");
+    
+    $ans = get_program_update($time);
+    echo json_encode($ans);
+    die();

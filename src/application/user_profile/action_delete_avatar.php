@@ -18,8 +18,8 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$query = "	UPDATE user SET image = '' WHERE id = $_user->id";
-	mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	header("Location: index.php?app=user_profile");
-	die();
+    $query = "UPDATE user SET image = '' WHERE id = $_user->id";
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    header("Location: index.php?app=user_profile");
+    die();

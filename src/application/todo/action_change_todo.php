@@ -18,24 +18,25 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$title 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['title']);
-	$text 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['text']);
-	$date 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['date']);
-	$id 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
-	
-	$_camp->todo( $id ) || die( "error" );
+    $title 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['title']);
+    $text 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['text']);
+    $date 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['date']);
+    $id 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
+    
+    $_camp->todo($id) || die("error");
 
-	if( $title == "" || $date == "" )
-	{	header ("Location: index.php?app=todo");	}
-	
-	$date = preg_match("/([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", $date, $regs);
-	$date = gmmktime(0, 0, 0, $regs[2], $regs[1], $regs[3]);
-	
-	$todo_date = new c_date();
-	$todo_date->setUnix( $date );
-	
-	$query = "UPDATE todo SET title='$title', short='$text', date='" . $todo_date->getValue() . "' WHERE id = $id";
-	mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	header ("Location: index.php?app=todo");
-	die();
+    if ($title == "" || $date == "") {
+        header("Location: index.php?app=todo");
+    }
+    
+    $date = preg_match("/([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", $date, $regs);
+    $date = gmmktime(0, 0, 0, $regs[2], $regs[1], $regs[3]);
+    
+    $todo_date = new c_date();
+    $todo_date->setUnix($date);
+    
+    $query = "UPDATE todo SET title='$title', short='$text', date='" . $todo_date->getValue() . "' WHERE id = $id";
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    header("Location: index.php?app=todo");
+    die();

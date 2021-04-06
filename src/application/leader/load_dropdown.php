@@ -18,18 +18,20 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	if( $_camp->is_course )
-		$query = "SELECT id, entry FROM dropdown WHERE list = 'function_course' AND value > '0'";
-	else
-		$query = "SELECT id, entry FROM dropdown WHERE list = 'function_camp' AND value > '0'";
-	
-	$reslut_function = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	$ans_function = array();
-	
-	while( $row = mysqli_fetch_assoc($reslut_function) )
-	{	$ans_function[] = $row;	}
+    if ($_camp->is_course) {
+        $query = "SELECT id, entry FROM dropdown WHERE list = 'function_course' AND value > '0'";
+    } else {
+        $query = "SELECT id, entry FROM dropdown WHERE list = 'function_camp' AND value > '0'";
+    }
+    
+    $reslut_function = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $ans_function = array();
+    
+    while ($row = mysqli_fetch_assoc($reslut_function)) {
+        $ans_function[] = $row;
+    }
 
-	$ans = $ans_function;
-	echo json_encode($ans);
-	die();
+    $ans = $ans_function;
+    echo json_encode($ans);
+    die();

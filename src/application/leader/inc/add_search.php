@@ -18,8 +18,6 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$std = $_REQUEST['std'];
-	
-	$index_content['main'] .= gettemplate_app('add_search', array("std" => $std));
-	
-?>
+    $std = $_REQUEST['std'];
+    
+    $index_content['main'] .= gettemplate_app('add_search', array("std" => $std));

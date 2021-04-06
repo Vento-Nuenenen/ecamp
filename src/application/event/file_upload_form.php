@@ -18,20 +18,18 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$_page->html = new PHPTAL($GLOBALS['tpl_dir'] . '/application/event/file_upload_form.tpl');
-	
-	$event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['event_id'] );
-	
-	$_camp->event( $event_id ) || die( "error" );
-	
-	$query = "	SELECT
-					*
+    $_page->html = new PHPTAL($GLOBALS['tpl_dir'] . '/application/event/file_upload_form.tpl');
+    
+    $event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_id']);
+    
+    $_camp->event($event_id) || die("error");
+    
+    $query = "SELECT *
 				FROM
 					event
 				WHERE
 					event.id = $event_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$event = mysqli_fetch_assoc( $result );
-	
-	$_page->html->set( 'event', $event );
-	
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $event = mysqli_fetch_assoc($result);
+    
+    $_page->html->set('event', $event);

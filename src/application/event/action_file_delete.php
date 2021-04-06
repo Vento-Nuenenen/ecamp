@@ -18,24 +18,25 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$file_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['file_id'] );
+    $file_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['file_id']);
 
-	$query = "	SELECT *
+    $query = "SELECT *
 				FROM event_document
 				WHERE id = " . $file_id;
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$file = mysqli_fetch_array( $result );
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $file = mysqli_fetch_array($result);
 
-	$query = "	DELETE FROM event_document
+    $query = "DELETE FROM event_document
 				WHERE id = " . $file['id'];
-	mysqli_query($GLOBALS["___mysqli_ston"],  $query );
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-	unlink( $file['name'] );
+    unlink($file['name']);
 
-	if( mysqli_num_rows( $result ) )
-	{	$ans = array( "error" => false );	}
-	else
-	{	$ans = array( "error" => true );	}
+    if (mysqli_num_rows($result)) {
+        $ans = array( "error" => false );
+    } else {
+        $ans = array( "error" => true );
+    }
 
-	echo json_encode( $ans );
-	die();
+    echo json_encode($ans);
+    die();

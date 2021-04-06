@@ -18,8 +18,8 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$query = "DELETE FROM course_aim WHERE camp_id='$_camp->id';";
-	mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $query = "DELETE FROM course_aim WHERE camp_id='$_camp->id';";
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-	header("Location:index.php?app=aim");
-	die();
+    header("Location:index.php?app=aim");
+    die();

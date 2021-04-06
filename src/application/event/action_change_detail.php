@@ -18,22 +18,21 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	//index.php?app=event&cmd=action_change_detail& time=time&content=content&resp=who&detail_id=2
-	
-	$event_detail_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['detail_id'] );
-	
-	$_camp->event_detail( $event_detail_id ) || die( "error" );
-	
-	$time = 	mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['time'] );
-	$content = 	mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['content'] );
-	$resp = 	mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['resp'] );
-	
-	$time_js = 	$_REQUEST['time'];
-	$content_js = 	$_REQUEST['content'];
-	$resp_js = 	$_REQUEST['resp'];
-	
-	$query = "
-				UPDATE
+    //index.php?app=event&cmd=action_change_detail& time=time&content=content&resp=who&detail_id=2
+    
+    $event_detail_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['detail_id']);
+    
+    $_camp->event_detail($event_detail_id) || die("error");
+    
+    $time = 	mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['time']);
+    $content = 	mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['content']);
+    $resp = 	mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['resp']);
+    
+    $time_js = 	$_REQUEST['time'];
+    $content_js = 	$_REQUEST['content'];
+    $resp_js = 	$_REQUEST['resp'];
+    
+    $query = "UPDATE
 					event_detail
 				SET
 					time 	= '$time',
@@ -41,13 +40,13 @@
 					resp 	= '$resp'
 				WHERE
 					event_detail.id = $event_detail_id";
-	mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$ans = array( 
-		"error" 	=> false,
-		"time" 		=> $time_js,
-		"content" 	=> $content_js,
-		"resp" 		=> $resp_js
-	);
-	echo json_encode( $ans );
-	die();
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $ans = array(
+        "error" 	=> false,
+        "time" 		=> $time_js,
+        "content" 	=> $content_js,
+        "resp" 		=> $resp_js
+    );
+    echo json_encode($ans);
+    die();

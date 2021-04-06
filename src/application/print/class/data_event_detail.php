@@ -18,31 +18,29 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	class print_data_event_detail_class
-	{
-		public $pid;
-		public $id;
-		public $event_id;
-		public $event;
-		public $time;
-		public $content;
-		public $resp;
-		public $sorting;
+    class print_data_event_detail_class
+    {
+        public $pid;
+        public $id;
+        public $event_id;
+        public $event;
+        public $time;
+        public $content;
+        public $resp;
+        public $sorting;
 
-		function __construct( $data, $pid )
-		{
-			$this->pid 		= $pid;
-			$this->id		= $data['id'];
-			$this->event_id	= $data['event_id'];
-			$this->time		= $data['time'];
-			$this->content	= $data['content'];
-			$this->resp		= $data['resp'];
-			$this->sorting	= $data['sorting'];
-			
-			$this->event 	= $pid->event[ $this->event_id ];
-			
-			$this->event->add_event_detail( $this );
-		}
-		
-	}
-?>
+        public function __construct($data, $pid)
+        {
+            $this->pid 		= $pid;
+            $this->id		= $data['id'];
+            $this->event_id	= $data['event_id'];
+            $this->time		= $data['time'];
+            $this->content	= $data['content'];
+            $this->resp		= $data['resp'];
+            $this->sorting	= $data['sorting'];
+            
+            $this->event 	= $pid->event[ $this->event_id ];
+            
+            $this->event->add_event_detail($this);
+        }
+    }

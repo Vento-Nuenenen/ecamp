@@ -18,53 +18,53 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	require '../../vendor/autoload.php';
-	use Phelium\Component\reCAPTCHA;
+    require '../../vendor/autoload.php';
+    use Phelium\Component\reCAPTCHA;
 
-	include("../config/config.php");
+    include("../config/config.php");
 
-	#############################################################################
+    #############################################################################
     # Register Error Handler
-	include_once($module_dir . "/error_handling.php");
-	
-	include($lib_dir . "/mysql.php");
-	include($lib_dir . "/functions/mail.php");
-	db_connect();
+    include_once($module_dir . "/error_handling.php");
+    
+    include($lib_dir . "/mysql.php");
+    include($lib_dir . "/functions/mail.php");
+    db_connect();
 
-	$captcha = new reCAPTCHA($GLOBALS['captcha_pub'], $GLOBALS['captcha_prv']);
-	
-	if (!$captcha->isValid($_POST['g-recaptcha-response']))
-	{	header( 'location: reminder.php?msg=Bitte CAPTCHA richtig abschreiben!' );	die();	}
+    $captcha = new reCAPTCHA($GLOBALS['captcha_pub'], $GLOBALS['captcha_prv']);
+    
+    if (!$captcha->isValid($_POST['g-recaptcha-response'])) {
+        header('location: reminder.php?msg=Bitte CAPTCHA richtig abschreiben!');
+        die();
+    }
 
-	$login = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST[ 'Login' ] );
+    $login = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST[ 'Login' ]);
 
-	$query = "	SELECT id, pw, active FROM user WHERE mail = '$login'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( ! mysqli_num_rows( $result ) )
-	{
-		header( "location: login.php" );
-		die();
-	}
-	
-	$user_id 		= mysqli_result( $result,  0,  'id' );
-	$user_pw 		= mysqli_result( $result,  0,  'pw' );
-	$user_active 	= mysqli_result( $result,  0,  'active' );
+    $query = "SELECT id, pw, active FROM user WHERE mail = '$login'";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (! mysqli_num_rows($result)) {
+        header("location: login.php");
+        die();
+    }
+    
+    $user_id 		= mysqli_result($result, 0, 'id');
+    $user_pw 		= mysqli_result($result, 0, 'pw');
+    $user_active 	= mysqli_result($result, 0, 'active');
 
-	if( ! $user_active )
-	{
-		header( "location: login.php" );
-		die();
-	}
+    if (! $user_active) {
+        header("location: login.php");
+        die();
+    }
 
-	$acode = microtime() . $user_pw;
-	$acode = md5( $acode );
+    $acode = microtime() . $user_pw;
+    $acode = md5($acode);
 
-	$query = "	UPDATE  user SET  `acode` =  '$acode' WHERE id = $user_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
+    $query = "UPDATE  user SET  `acode` =  '$acode' WHERE id = $user_id";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-	//	SEND MAIL FOR REMINDER:
-	// =========================
+    //	SEND MAIL FOR REMINDER:
+    // =========================
 $text = <<<___MAILBODY
 <table width="100%">
     <tbody>
@@ -113,14 +113,14 @@ $text = <<<___MAILBODY
 </table>
 ___MAILBODY;
 
-	ecamp_send_mail($login, "eCamp - Passwort ändern", $text);
-	//mail( $login, "eCamp - Passwort ändern", $text, "From: eCamp Pfadi Luzern <ecamp@pfadiluzern.ch>" );
-	
-	/*
-	$text = urlencode( $text );
- 	$subject = urlencode( "eCamp - Passwort ändern" );
-	fopen( "http://ecamp2.pfadiluzern.ch/mail.php?to=$login&subject=$subject&message=$text", "r" );
-	*/
+    ecamp_send_mail($login, "eCamp - Passwort ändern", $text);
+    //mail( $login, "eCamp - Passwort ändern", $text, "From: eCamp Pfadi Luzern <ecamp@pfadiluzern.ch>" );
+    
+    /*
+    $text = urlencode( $text );
+    $subject = urlencode( "eCamp - Passwort ändern" );
+    fopen( "http://ecamp2.pfadiluzern.ch/mail.php?to=$login&subject=$subject&message=$text", "r" );
+    */
 
-	header( 'location: login.php?msg=Überprüfe deine Mailbox. Mit dem Link im Mail kann das Passwort neu gesetzt werden.' );
-	die();
+    header('location: login.php?msg=Überprüfe deine Mailbox. Mit dem Link im Mail kann das Passwort neu gesetzt werden.');
+    die();

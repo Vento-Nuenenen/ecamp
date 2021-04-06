@@ -18,22 +18,23 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	header( "Content-Type: image/jpeg" );
-	
-	$show_user_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['show_user_id'] );
-	
-	$query = "	SELECT
+    header("Content-Type: image/jpeg");
+    
+    $show_user_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['show_user_id']);
+    
+    $query = "SELECT
 					image
 				FROM
 					user
 				WHERE
 					id = $show_user_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	$imgData = mysqli_result( $result,  0,  'image' );
-	
-	if($imgData == "")
-	{	die( file_get_contents( "public/global/img/no-avatar.gif" ) );	}
-	else
-	{	echo $imgData;	}
-	
-	die();
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $imgData = mysqli_result($result, 0, 'image');
+    
+    if ($imgData == "") {
+        die(file_get_contents("public/global/img/no-avatar.gif"));
+    } else {
+        echo $imgData;
+    }
+    
+    die();

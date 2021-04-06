@@ -18,26 +18,26 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$siko_note = array();
-	
-	$query = "	SELECT
+    $siko_note = array();
+    
+    $query = "SELECT
 					seco,
 					notes
 				FROM
 					event
 				WHERE
 					event.id = $event_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$row = mysqli_fetch_assoc( $result );
-	
-	$siko_note['siko'] = array(
-		"script" => 'action_change_siko',
-		"value"  => $row['seco']
-	);
-	
-	$siko_note['notes'] = array(
-		"script" => 'action_change_notes',
-		"value"  => $row['notes']
-	);
-	
-	$_page->html->set( 'siko_note', $siko_note );
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $row = mysqli_fetch_assoc($result);
+    
+    $siko_note['siko'] = array(
+        "script" => 'action_change_siko',
+        "value"  => $row['seco']
+    );
+    
+    $siko_note['notes'] = array(
+        "script" => 'action_change_notes',
+        "value"  => $row['notes']
+    );
+    
+    $_page->html->set('siko_note', $siko_note);

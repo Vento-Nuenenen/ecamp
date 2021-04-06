@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
-	
-	$query = "	SELECT
+    
+    $query = "SELECT
     				event.id,
     				event.name,
     				event.progress,
@@ -45,17 +45,16 @@
     				day.subcamp_id = subcamp.id
     			ORDER BY date, starttime";
     
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$events = array();
-	$c_date = new c_date();
-	
-	while( $row = mysqli_fetch_assoc( $result ) )
-	{
-		$c_date->setDay2000( $row['date'] );
-		
-		$events[ $row['date'] ]['day_str'] = $c_date->getString( 'd.m.Y' );
-		$events[ $row['date'] ]['events'][] = $row;
-	}
-	
-	$_page->html->set( 'events', $events );
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $events = array();
+    $c_date = new c_date();
+    
+    while ($row = mysqli_fetch_assoc($result)) {
+        $c_date->setDay2000($row['date']);
+        
+        $events[ $row['date'] ]['day_str'] = $c_date->getString('d.m.Y');
+        $events[ $row['date'] ]['events'][] = $row;
+    }
+    
+    $_page->html->set('events', $events);

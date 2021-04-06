@@ -18,39 +18,35 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$job_id   = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['job_id']);	
-	
-	$_camp->job( $job_id ) || die( "error" );
-	
-	// Authentifizierung überprüfen
-	// write --> Ab Lagerleiter (level: 50)
-	if( $_user_camp->auth_level < 50 || $job_id == "")
-	{
-	    // Keine Berechtigung
-		if( $_user_camp->auth_level < 50 )
-		{
-    		//$xml_replace[error] = 1;
-			//$xml_replace['error-msg'] = "Keine Berechtigung";
-			
-			$ans = array( "error" => true, "msg" => "Keine Berechtigung!" );
-			echo json_encode( $ans );
-			die();
-		}
-		else
-		{
-			//$xml_replace[error] = 2;
-			//$xml_replace['error-msg'] = "<![CDATA[Bitte zuerst Job auswählen!]]>";
-			
-			$ans = array( "error" => true, "msg" => "Bitte zuerst einen Job auswälen" );
-			echo json_encode( $ans );
-			die();
-		}
-	}
-	
-	// Überprüfen, ob gleicher Tagesjob scho besteht
-	$query = "DELETE FROM job WHERE camp_id='$_camp->id' AND id='$job_id'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$ans = array( "error" => false );
-	echo json_encode( $ans );
-	die();
+    $job_id   = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['job_id']);
+    
+    $_camp->job($job_id) || die("error");
+    
+    // Authentifizierung überprüfen
+    // write --> Ab Lagerleiter (level: 50)
+    if ($_user_camp->auth_level < 50 || $job_id == "") {
+        // Keine Berechtigung
+        if ($_user_camp->auth_level < 50) {
+            //$xml_replace[error] = 1;
+            //$xml_replace['error-msg'] = "Keine Berechtigung";
+            
+            $ans = array( "error" => true, "msg" => "Keine Berechtigung!" );
+            echo json_encode($ans);
+            die();
+        } else {
+            //$xml_replace[error] = 2;
+            //$xml_replace['error-msg'] = "<![CDATA[Bitte zuerst Job auswählen!]]>";
+            
+            $ans = array( "error" => true, "msg" => "Bitte zuerst einen Job auswälen" );
+            echo json_encode($ans);
+            die();
+        }
+    }
+    
+    // Überprüfen, ob gleicher Tagesjob scho besteht
+    $query = "DELETE FROM job WHERE camp_id='$_camp->id' AND id='$job_id'";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $ans = array( "error" => false );
+    echo json_encode($ans);
+    die();

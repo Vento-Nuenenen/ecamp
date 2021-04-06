@@ -18,37 +18,40 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
-	$_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/camp_admin/new_camp.tpl/new_camp');
-	$_page->html->set('box_title', 'Neues Lager erstellen');
-	
-	$query = "	SELECT *
+    $_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
+    $_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/camp_admin/new_camp.tpl/new_camp');
+    $_page->html->set('box_title', 'Neues Lager erstellen');
+    
+    $query = "SELECT *
 				FROM dropdown
 				WHERE list = 'function_camp' AND value > 0";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$functions = array();
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $functions = array();
 
-	while( $function = mysqli_fetch_assoc( $result ) )
-	{	$functions[] = $function;	}
-	
-	$query = "	SELECT *
+    while ($function = mysqli_fetch_assoc($result)) {
+        $functions[] = $function;
+    }
+    
+    $query = "SELECT *
 				FROM dropdown
 				WHERE list = 'camptype'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$camptypes = array();
-	
-	while( $camptype = mysqli_fetch_assoc( $result ) )
-	{	$camptypes[] = $camptype;	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $camptypes = array();
+    
+    while ($camptype = mysqli_fetch_assoc($result)) {
+        $camptypes[] = $camptype;
+    }
 
-	$query = "	SELECT *
+    $query = "SELECT *
 				FROM dropdown
 				WHERE list = 'jstype'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$jstypes = array();
-	
-	while( $jstype = mysqli_fetch_assoc( $result ) )
-	{	$jstypes[] = $jstype;	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $jstypes = array();
+    
+    while ($jstype = mysqli_fetch_assoc($result)) {
+        $jstypes[] = $jstype;
+    }
 
-	$_page->html->set( 'functions', $functions );
-	$_page->html->set( 'camptypes', $camptypes );
-	$_page->html->set( 'jstypes', $jstypes );
+    $_page->html->set('functions', $functions);
+    $_page->html->set('camptypes', $camptypes);
+    $_page->html->set('jstypes', $jstypes);

@@ -18,11 +18,7 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-	$_Q = array(
-		"camp" 		=> "SELECT * FROM camp WHERE 1",
-		"category"	=> "SELECT * FROM category WHERE 1"
-	);
-	
-	
-?>
+    $_Q = array(
+        "camp" 		=> "SELECT * FROM camp WHERE 1",
+        "category"	=> "SELECT * FROM category WHERE 1"
+    );

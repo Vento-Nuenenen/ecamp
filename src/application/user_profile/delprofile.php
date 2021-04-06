@@ -18,14 +18,15 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
-	$_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/user_profile/delprofile.tpl/delprofile');
-	$_page->html->set('box_title', 'Mein Profil löschen');
+    $_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
+    $_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/user_profile/delprofile.tpl/delprofile');
+    $_page->html->set('box_title', 'Mein Profil löschen');
 
-	$query = "SELECT user_camp.id FROM user_camp WHERE user_id = " . $_user->id;
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( mysqli_num_rows( $result ) )
-		$_page->html->set( 'profiledelable', false );
-	else
-		$_page->html->set( 'profiledelable', true );
+    $query = "SELECT user_camp.id FROM user_camp WHERE user_id = " . $_user->id;
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (mysqli_num_rows($result)) {
+        $_page->html->set('profiledelable', false);
+    } else {
+        $_page->html->set('profiledelable', true);
+    }

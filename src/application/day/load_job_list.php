@@ -1,4 +1,4 @@
-<?php	
+<?php
 /*
  * Copyright (C) 2010 Urban Suppiger, Pirmin Mattmann
  *
@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
-	
-	$job_list = array();
-	
-	$query = "	SELECT
+    
+    $job_list = array();
+    
+    $query = "SELECT
 					user.id,
 					user.scoutname,
 					user.firstname,
@@ -34,13 +34,14 @@
 					dropdown.entry != 'Support' AND
 					user.id = user_camp.user_id AND
 					user_camp.camp_id = $_camp->id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$job_list['users'] = array();
-	while( $user = mysqli_fetch_assoc( $result ) )
-	{	$job_list['users'][ $user['id'] ] = $user;	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $job_list['users'] = array();
+    while ($user = mysqli_fetch_assoc($result)) {
+        $job_list['users'][ $user['id'] ] = $user;
+    }
 
-	$query = "	SELECT
+    $query = "SELECT
 					job.id,
 					job.job_name,
 					IF( ISNULL( job_day.user_camp_id ), '0', job_day.user_camp_id ) as user_camp_id,
@@ -64,8 +65,9 @@
 					user_camp.id = job_day.user_camp_id 
 				WHERE
 					job.camp_id = $_camp->id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$job_list['jobs'] = array();
-	while( $job = mysqli_fetch_assoc( $result ) )
-	{	$job_list['jobs'][ $job['id'] ] = $job;	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $job_list['jobs'] = array();
+    while ($job = mysqli_fetch_assoc($result)) {
+        $job_list['jobs'][ $job['id'] ] = $job;
+    }

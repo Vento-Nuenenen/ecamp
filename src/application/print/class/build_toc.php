@@ -18,39 +18,36 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	class print_build_toc
-	{
-		public $page = array();
-		public $countoffset = 1;
-		
-		function __construct()
-		{}
-		
-		function addTOC( $pdf )
-		{
-			$this->page[] = $pdf->PageNo();
-		}
-		
-		function build( $pdf )
-		{
-			$pdf->SetFont( '', '', 10 );
-			
-			if( count( $this->page ) )
-			{
-				foreach( $this->page as $nr )
-				{
-					$tocsnr = $pdf->PageNo();
-					
-					$pdf->addPage( 'P', 'A4');
-					$pdf->setXY( 10, 20 );
-					$pdf->addToc( $nr + $this->countoffset );
-					
-					$tocenr = $pdf->PageNO();
-					
-					$this->countoffset += ( $tocenr - $tocsnr );
-				}
-			}
-		}
-	}
-	
-?>
+    class print_build_toc
+    {
+        public $page = array();
+        public $countoffset = 1;
+        
+        public function __construct()
+        {
+        }
+        
+        public function addTOC($pdf)
+        {
+            $this->page[] = $pdf->PageNo();
+        }
+        
+        public function build($pdf)
+        {
+            $pdf->SetFont('', '', 10);
+            
+            if (count($this->page)) {
+                foreach ($this->page as $nr) {
+                    $tocsnr = $pdf->PageNo();
+                    
+                    $pdf->addPage('P', 'A4');
+                    $pdf->setXY(10, 20);
+                    $pdf->addToc($nr + $this->countoffset);
+                    
+                    $tocenr = $pdf->PageNO();
+                    
+                    $this->countoffset += ($tocenr - $tocsnr);
+                }
+            }
+        }
+    }

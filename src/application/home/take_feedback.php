@@ -18,47 +18,49 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
-	$_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/home/taken.tpl/taken');
-	$_page->html->set('box_title', 'Danke!');
+    $_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
+    $_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/home/taken.tpl/taken');
+    $_page->html->set('box_title', 'Danke!');
 
-	$feedback 	= utf8_decode(mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['feedback']));
-	$feedback = preg_replace("/\\\\n/","\n",$feedback);
-	
-	$type = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['type']);
-	
-	$mail = $_user->mail;
-	$name = $_user->display_name . " [" . $_user->id . "]";
+    $feedback 	= utf8_decode(mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['feedback']));
+    $feedback = preg_replace("/\\\\n/", "\n", $feedback);
+    
+    $type = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['type']);
+    
+    $mail = $_user->mail;
+    $name = $_user->display_name . " [" . $_user->id . "]";
 
-	$query = "INSERT INTO feedback (`name` ,`mail` ,`feedback`, `time`)
+    $query = "INSERT INTO feedback (`name` ,`mail` ,`feedback`, `time`)
 							VALUES ('$name', '$mail', '$feedback', NOW( ) )";
-	
-	//echo $query;
-	
-	mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	$mailto = $GLOBALS['feedback_mail'];
-	
-	$headers = "From: ".$name." <".$mail.">";
-	$feedback = preg_replace("/\\\\r/","",$feedback);
+    
+    //echo $query;
+    
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $mailto = $GLOBALS['feedback_mail'];
+    
+    $headers = "From: ".$name." <".$mail.">";
+    $feedback = preg_replace("/\\\\r/", "", $feedback);
 
-	if( $type == "feedback" )
-		ecamp_send_mail($mailto, "Feedback von: " . $name, $feedback);
-		// mail($mailto, "Feedback von: " . $name, $feedback, $headers);
-	else if( $type == "help" )
-		ecamp_send_mail($mailto, "Supportanfrage von: " . $name, $feedback);
-		// mail($mailto, "Supportanfrage von: " . $name, $feedback, $headers);
+    if ($type == "feedback") {
+        ecamp_send_mail($mailto, "Feedback von: " . $name, $feedback);
+    }
+        // mail($mailto, "Feedback von: " . $name, $feedback, $headers);
+    elseif ($type == "help") {
+        ecamp_send_mail($mailto, "Supportanfrage von: " . $name, $feedback);
+    }
+        // mail($mailto, "Supportanfrage von: " . $name, $feedback, $headers);
 
-	$_page->html->set( 'feedback', 	( $type == "feedback" ) );
-	$_page->html->set( 'help', 		( $type == "help" ) );
-	
-	/*
-	header("Content-type: application/xml");
-	$xml_replace[error] = 0;
-	
-	$xml = gettemplate_main( "ajax_response", $xml_replace ); 
-	
+    $_page->html->set('feedback', ($type == "feedback"));
+    $_page->html->set('help', ($type == "help"));
+    
+    /*
+    header("Content-type: application/xml");
+    $xml_replace[error] = 0;
+
+    $xml = gettemplate_main( "ajax_response", $xml_replace );
+
     echo $xml;
     */
     
-	//die();
+    //die();

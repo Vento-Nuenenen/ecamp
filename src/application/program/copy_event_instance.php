@@ -18,34 +18,33 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	include( 'inc/get_program_update.php');
+    include('inc/get_program_update.php');
 
-	$event_instance_id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_instance_id']);
-	$time				= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['time']);
-	
-	$_camp->event_instance( $event_instance_id ) || die( "error" );
-	
-	$query = "	SELECT
+    $event_instance_id	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_instance_id']);
+    $time				= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['time']);
+    
+    $_camp->event_instance($event_instance_id) || die("error");
+    
+    $query = "SELECT
 					length
 				FROM
 					event_instance
 				WHERE
 					id = $event_instance_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	$length = implode(mysqli_fetch_row($result));
-	
-	if($length > 60)
-	{
-		$new_length = $length / 2;
-		$query = "UPDATE event_instance SET length = $new_length WHERE id = $event_instance_id";
-		mysqli_query($GLOBALS["___mysqli_ston"], $query);
-		
-		$move = $new_length;
-	}
-	else
-	{	$move = $length;	}
-	
-	$query = "	INSERT INTO
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $length = implode(mysqli_fetch_row($result));
+    
+    if ($length > 60) {
+        $new_length = $length / 2;
+        $query = "UPDATE event_instance SET length = $new_length WHERE id = $event_instance_id";
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        
+        $move = $new_length;
+    } else {
+        $move = $length;
+    }
+    
+    $query = "INSERT INTO
 					event_instance
 				(event_id, day_id, starttime, length, dleft, width)	
 				(	SELECT
@@ -60,11 +59,11 @@
 					WHERE
 						id = $event_instance_id
 				)";
-	mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	header("Content-type: application/json");
-	
-	$ans = get_program_update( $time );
-	echo json_encode( $ans );
-	
-	die();
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    header("Content-type: application/json");
+    
+    $ans = get_program_update($time);
+    echo json_encode($ans);
+    
+    die();

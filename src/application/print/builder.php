@@ -28,7 +28,7 @@
 
     # increase memory limit for printing
     # keep overall memor_limit low to allow for more FPM processes per server (high WEB_CONCURRENCY)
-    ini_set("memory_limit","64M");
+    ini_set("memory_limit", "64M");
 
     require_once('class/data.php');
     require_once('class/build.php');
@@ -81,8 +81,7 @@
             } else {
                 $pdf->addPage('P', 'A4');
             }
-            
-            
+
             $print_build->data->event_instance[ $event_instance_id ]->day->gen_event_nr();
             $print_build->event->build($pdf, $print_build->data->event_instance[ $event_instance_id ]);
         }
@@ -112,13 +111,9 @@
             //$pdf->setPageFormat( 'A4', 'P' );
         }
     }
-    
-    
+
     $print_build->toc->build($pdf);
-    
-    
-    
+
     $pdf->output($_camp->short_name . ".pdf", 'I');
 
-    
     die();

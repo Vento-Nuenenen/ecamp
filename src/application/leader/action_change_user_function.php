@@ -18,25 +18,25 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$user_camp_id = $_REQUEST['user_camp_id'];
-	$function_id = $_REQUEST['function_id'];
-	
-	if( $_user_camp->auth_level < 50 )	{	die( "ERROR" );	}
-	
-	$query = "	UPDATE user_camp
+    $user_camp_id = $_REQUEST['user_camp_id'];
+    $function_id = $_REQUEST['function_id'];
+    
+    if ($_user_camp->auth_level < 50) {
+        die("ERROR");
+    }
+    
+    $query = "UPDATE user_camp
 				SET function_id = $function_id
 				WHERE user_camp.id = $user_camp_id
 				AND user_camp.camp_id = " . $_camp->id;
-	
-	mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( mysqli_error($GLOBALS["___mysqli_ston"]) )
-	{	die( "Error" );	}
-	else
-	{
-		header( "Location: index.php?app=leader" );
-		die();
-	}
-	
-	die();
-	
+    
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (mysqli_error($GLOBALS["___mysqli_ston"])) {
+        die("Error");
+    } else {
+        header("Location: index.php?app=leader");
+        die();
+    }
+    
+    die();

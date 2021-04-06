@@ -18,35 +18,31 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$pid = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['pid'] );
+    $pid = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['pid']);
 
-	$ans = array();
-	$ans['values'] = array();
-	
-	if( $pid == 0 )
-	{
-		$query = "	SELECT *
+    $ans = array();
+    $ans['values'] = array();
+    
+    if ($pid == 0) {
+        $query = "SELECT *
 					FROM `groups`
 					WHERE ISNULL( pid ) AND active=1
 					ORDER BY name";
-	}
-	else
-	{
-		$query = "	SELECT *
+    } else {
+        $query = "	SELECT *
 					FROM `groups`
 					WHERE pid = $pid AND active=1
 					ORDER BY name";
-	}
-	
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	while( $g = mysqli_fetch_assoc( $result ) )
-	{
-		$g['text']  = $g['prefix'] . " " . $g['name'];
-		
-		$ans['values'][] = $g;
-	}
-	
-	$ans['num_values' ] = count( $ans['values'] );
-	
-	echo json_encode( $ans );
-	die();
+    }
+    
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    while ($g = mysqli_fetch_assoc($result)) {
+        $g['text']  = $g['prefix'] . " " . $g['name'];
+        
+        $ans['values'][] = $g;
+    }
+    
+    $ans['num_values' ] = count($ans['values']);
+    
+    echo json_encode($ans);
+    die();

@@ -18,25 +18,24 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	//Load composer's autoloader
-	require '../../vendor/autoload.php';
+    //Load composer's autoloader
+    require '../../vendor/autoload.php';
 
-	require_once( "../config/config.php" );
+    require_once("../config/config.php");
 
-	#############################################################################
+    #############################################################################
     # Register Error Handler
-	include_once($module_dir . "/error_handling.php");
-	
-	
-	if( $_SESSION['skin'] == "" ) $_SESSION['skin'] = $GLOBALS['skin'];
-	$html = new PHPTAL("public/skin/".$_SESSION['skin']."/resendacode.tpl");
-	
-	$html->setEncoding('UTF-8');
-	
-	$html->set('SHOW_MSG', false);
-	
-	
-	echo $html->execute();
-	
-	
-?>
+    include_once($module_dir . "/error_handling.php");
+    
+    
+    if ($_SESSION['skin'] == "") {
+        $_SESSION['skin'] = $GLOBALS['skin'];
+    }
+    $html = new PHPTAL("public/skin/".$_SESSION['skin']."/resendacode.tpl");
+    
+    $html->setEncoding('UTF-8');
+    
+    $html->set('SHOW_MSG', false);
+    
+    
+    echo $html->execute();

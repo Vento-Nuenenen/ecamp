@@ -18,16 +18,16 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	require_once( $GLOBALS['app_dir'] . "/day/inc/prog_color.php" );
-	
-	$_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
-	$_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/my_resp/home.tpl/home');
-	$_page->html->set('box_title', "Meine Verantwortung");
+    require_once($GLOBALS['app_dir'] . "/day/inc/prog_color.php");
+    
+    $_page->html->set('main_macro', $GLOBALS['tpl_dir'].'/global/content_box_fit.tpl/predefine');
+    $_page->html->set('box_content', $GLOBALS['tpl_dir'].'/application/my_resp/home.tpl/home');
+    $_page->html->set('box_title', "Meine Verantwortung");
     $date = new c_date();
 
     // Events
     $events = array();
-    $query = "	SELECT
+    $query = "SELECT
     				event.id,
     				event.name,
     				event.progress,
@@ -79,7 +79,7 @@
     				day.subcamp_id = subcamp.id
     			ORDER BY date, starttime";
     
-    $query = "	SELECT
+    $query = "SELECT
     				event.id,
     				event.name,
     				event.progress,
@@ -110,30 +110,30 @@
     				day.subcamp_id = subcamp.id
     			ORDER BY date, starttime";
     $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-    while( $event = mysqli_fetch_assoc($result) )
-    {
-    	$date->setDay2000( $event['date'] );
-    	
-    	$event['link'] = '$event.edit(' . $event['id'] . ')';
-    	$event['color_str'] = "background-color:#" . $event['color'];
-    	
-    	if( $event['form_type'] )
-		{	$event['prog_color'] = get_progress_color( $event['progress'] );	}
-		else
-		{	$event['prog_color'] = "#000000";	}
-		
-    	$event['show_event_nr'] = ( $event['form_type'] > 0 );
+    while ($event = mysqli_fetch_assoc($result)) {
+        $date->setDay2000($event['date']);
+        
+        $event['link'] = '$event.edit(' . $event['id'] . ')';
+        $event['color_str'] = "background-color:#" . $event['color'];
+        
+        if ($event['form_type']) {
+            $event['prog_color'] = get_progress_color($event['progress']);
+        } else {
+            $event['prog_color'] = "#000000";
+        }
+        
+        $event['show_event_nr'] = ($event['form_type'] > 0);
 
-    	$events[$event['date']]['day_offset'] = $event['day_offset'];
-    	$events[$event['date']]['date'] = $date->getString( 'd.m.Y' );
-    	$events[$event['date']]['data'][] = $event;
+        $events[$event['date']]['day_offset'] = $event['day_offset'];
+        $events[$event['date']]['date'] = $date->getString('d.m.Y');
+        $events[$event['date']]['data'][] = $event;
     }
     //echo "events => ";
     //print_r($events);
 
     // day_jobs
     $day_jobs = array();
-    $query = "	SELECT
+    $query = "SELECT
     				job.job_name,
     				day.id,
     				(day.day_offset + subcamp.start) as date,
@@ -159,22 +159,21 @@
     				day.subcamp_id = subcamp.id
     			ORDER BY day_offset";
     $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-    while( $day_job = mysqli_fetch_assoc( $result ) )
-    {
-    	$date->setDay2000( $day_job['date'] );
-    	
-    	$day_job['date_string'] = $date->getString( "d.m.Y" );
-    	$day_jobs[$day_job['date']]['link'] = "index.php?app=day&cmd=home&day_id=" . $day_job['id'];
-    	$day_jobs[$day_job['date']]['date'] = $day_job['date_string'];
-    	$day_jobs[$day_job['date']]['day_offset'] = $day_job['day_offset'];
-    	$day_jobs[$day_job['date']]['data'][] = $day_job;
+    while ($day_job = mysqli_fetch_assoc($result)) {
+        $date->setDay2000($day_job['date']);
+        
+        $day_job['date_string'] = $date->getString("d.m.Y");
+        $day_jobs[$day_job['date']]['link'] = "index.php?app=day&cmd=home&day_id=" . $day_job['id'];
+        $day_jobs[$day_job['date']]['date'] = $day_job['date_string'];
+        $day_jobs[$day_job['date']]['day_offset'] = $day_job['day_offset'];
+        $day_jobs[$day_job['date']]['data'][] = $day_job;
     }
     //echo "day_jobs => ";
     //print_r($day_jobs);
 
     // todo
     $todos = array();
-    $query = "	SELECT
+    $query = "SELECT
     				todo.title,
     				todo.date,
     				todo.done
@@ -187,11 +186,10 @@
     				todo.id = todo_user_camp.todo_id 
        			ORDER BY todo.date";
     $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-    while( $todo = mysqli_fetch_assoc( $result ) )
-    {
-    	$date->setDay2000( $todo['date'] );
-    	$todo['date_string'] = $date->getString( 'd.m.Y' );
-    	$todos[] = $todo;
+    while ($todo = mysqli_fetch_assoc($result)) {
+        $date->setDay2000($todo['date']);
+        $todo['date_string'] = $date->getString('d.m.Y');
+        $todos[] = $todo;
     }
     //echo "todos => ";
     //print_r($todos);
@@ -199,10 +197,10 @@
     $_page->html->set('events', $events);
     $_page->html->set('day_jobs', $day_jobs);
     $_page->html->set('todos', $todos);
-	
-	//	INFOBOX:
-	// ==========
-	include($GLOBALS['module_dir'] . "/info/category.php");
-	
-	$_page->html->set( 'show_info_box', true );
-	$_page->html->set( 'info_box', $GLOBALS['tpl_dir'].'/module/info/info_box.tpl/info_box' );
+    
+    //	INFOBOX:
+    // ==========
+    include($GLOBALS['module_dir'] . "/info/category.php");
+    
+    $_page->html->set('show_info_box', true);
+    $_page->html->set('info_box', $GLOBALS['tpl_dir'].'/module/info/info_box.tpl/info_box');

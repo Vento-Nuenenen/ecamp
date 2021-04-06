@@ -18,13 +18,13 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-		$article = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['article'] );
-		$quantity = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['quantity'] );
-		$event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['event_id'] );
-		
-		$_camp->event( $event_id ) || die( "error" );
-		
-		$query = "	SELECT
+        $article = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['article']);
+        $quantity = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['quantity']);
+        $event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_id']);
+        
+        $_camp->event($event_id) || die("error");
+        
+        $query = "SELECT
 						id
 					FROM
 					(
@@ -49,14 +49,15 @@
 					) as mat
 					WHERE
 						mat.name = '$article'";
-		$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-		
-		if( mysqli_num_rows( $result ) )
-		{	$id = mysqli_result( $result,  0,  'id' );	}
-		else
-		{	$id = "NULL";	}
-		
-		$query = "	SELECT
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        
+        if (mysqli_num_rows($result)) {
+            $id = mysqli_result($result, 0, 'id');
+        } else {
+            $id = "NULL";
+        }
+        
+        $query = "SELECT
 						*
 					FROM
 						mat_article_event
@@ -64,24 +65,18 @@
 						event_id = $event_id AND
 						mat_article_id = $id AND
 						article_name = '$article'";
-		$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-		
-		if( mysqli_num_rows($result) )
-		{
-			$mode = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['mode'] );
-			if( $mode == "concat" )
-			{}
-			elseif( $mode == "seperate" )
-			{}
-			elseif( !isset( $mode ) || $mode == "" )
-			{
-				$ans = array( "ans" => "aks_concat_seperate" );
-				echo json_encode( $ans );
-			}
-		}
-		else
-		{
-			$query = "	INSERT INTO  
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        
+        if (mysqli_num_rows($result)) {
+            $mode = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['mode']);
+            if ($mode == "concat") {
+            } elseif ($mode == "seperate") {
+            } elseif (!isset($mode) || $mode == "") {
+                $ans = array( "ans" => "aks_concat_seperate" );
+                echo json_encode($ans);
+            }
+        } else {
+            $query = "INSERT INTO  
 							mat_article_event
 						(
 							`event_id` ,
@@ -96,11 +91,11 @@
 							'$article', 
 							$quantity
 						)";
-			mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-			
-			
-			$ans = array( "ans" => "saved" );
-			echo json_encode( $ans );
-		}
+            mysqli_query($GLOBALS["___mysqli_ston"], $query);
+            
+            
+            $ans = array( "ans" => "saved" );
+            echo json_encode($ans);
+        }
 
-	die();
+    die();

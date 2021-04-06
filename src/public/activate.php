@@ -18,39 +18,36 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	include("../config/config.php");
-	include($lib_dir . "/mysql.php");
-	db_connect();
+    include("../config/config.php");
+    include($lib_dir . "/mysql.php");
+    db_connect();
 
-	$user_id 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST[ 'user_id' ] );
-	$acode		= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST[ 'acode' ] );
+    $user_id 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST[ 'user_id' ]);
+    $acode		= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST[ 'acode' ]);
 
-	$query = "SELECT user.active, user.acode FROM user WHERE user.id = $user_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( !mysqli_num_rows( $result ) )
-	{
-		header( "location: login.php?msg=Aktivierung ist fehlgeschlagen. Bitte Support kontaktieren." );
-		die();
-	}
+    $query = "SELECT user.active, user.acode FROM user WHERE user.id = $user_id";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if (!mysqli_num_rows($result)) {
+        header("location: login.php?msg=Aktivierung ist fehlgeschlagen. Bitte Support kontaktieren.");
+        die();
+    }
 
-	if( mysqli_result( $result,  0,  'active' ) )
-	{
-		header( "location: login.php?msg=Account ist bereits aktiviert" );
-		die();
-	}
+    if (mysqli_result($result, 0, 'active')) {
+        header("location: login.php?msg=Account ist bereits aktiviert");
+        die();
+    }
 
-	if( $acode != mysqli_result( $result,  0,  'acode' ) )
-	{
-		header( "location: login.php?msg=Aktivierung ist fehlgeschlagen. Bitte Support kontaktieren." );
-		die();
-	}
+    if ($acode != mysqli_result($result, 0, 'acode')) {
+        header("location: login.php?msg=Aktivierung ist fehlgeschlagen. Bitte Support kontaktieren.");
+        die();
+    }
 
-	$query = "	UPDATE  user 
+    $query = "UPDATE  user 
 				SET  `active` =  '1', `acode` =  '' 
 				WHERE  `user`.`id` = $user_id LIMIT 1 ;";
-	mysqli_query($GLOBALS["___mysqli_ston"],  $query );
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-	header( "location: login.php?msg=Account wurde erfolgreich aktiviert" );
+    header("location: login.php?msg=Account wurde erfolgreich aktiviert");
 
-	die();
+    die();

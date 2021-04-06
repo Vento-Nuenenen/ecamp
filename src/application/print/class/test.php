@@ -18,94 +18,94 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	// DO NOT INSERT THIS PART!!!
-	//*******************************************************
-	$GLOBALS['en_to_de'] = array(
-		"Monday" 	=> "Montag",
-		"Tuesday"	=> "Dienstag",
-		"Wednesday"	=> "Mittwoch",
-		"Thursday"	=> "Donnerstag",
-		"Friday"	=> "Freitag",
-		"Saturday"	=> "Samstag",
-		"Sunday"	=> "Sonntag",
-		
-		"Mon"		=> "Mo",
-		"Tue"		=> "Di",
-		"Wed"		=> "Mi",
-		"Thu"		=> "Do",
-		"Fri"		=> "Fr",
-		"Sat"		=> "Sa",
-		"Sun"		=> "So",
-		
-		"January"	=> "Januar",
-		"February"	=> "Februar",
-		"March"		=> "März",
-		"April"		=> "April",
-		"May"		=> "Mai",
-		"June"		=> "Juni",
-		"July"		=> "Juli",
-		"August"	=> "August",
-		"September"	=> "September",
-		"November"	=> "November",
-		"December"	=> "Dezember"
-	);
-	
-	require_once( '../../../lib/functions/date.php' );
-	
-	$GLOBALS['time_shift'] = 300;
-	
-	//*******************************************************
-	($GLOBALS["___mysqli_ston"] = mysqli_connect( 'localhost' ,  'root',  '')) or die(mysqli_error($GLOBALS["___mysqli_ston"]));
-	mysqli_select_db($GLOBALS["___mysqli_ston"], ecamp) or die(mysqli_error($GLOBALS["___mysqli_ston"]));
-	
-	mysqli_query($GLOBALS["___mysqli_ston"], "SET NAMES 'utf8'");
-	mysqli_query($GLOBALS["___mysqli_ston"], "SET CHARACTER SET 'utf8'");
+    // DO NOT INSERT THIS PART!!!
+    //*******************************************************
+    $GLOBALS['en_to_de'] = array(
+        "Monday" 	=> "Montag",
+        "Tuesday"	=> "Dienstag",
+        "Wednesday"	=> "Mittwoch",
+        "Thursday"	=> "Donnerstag",
+        "Friday"	=> "Freitag",
+        "Saturday"	=> "Samstag",
+        "Sunday"	=> "Sonntag",
+        
+        "Mon"		=> "Mo",
+        "Tue"		=> "Di",
+        "Wed"		=> "Mi",
+        "Thu"		=> "Do",
+        "Fri"		=> "Fr",
+        "Sat"		=> "Sa",
+        "Sun"		=> "So",
+        
+        "January"	=> "Januar",
+        "February"	=> "Februar",
+        "March"		=> "März",
+        "April"		=> "April",
+        "May"		=> "Mai",
+        "June"		=> "Juni",
+        "July"		=> "Juli",
+        "August"	=> "August",
+        "September"	=> "September",
+        "November"	=> "November",
+        "December"	=> "Dezember"
+    );
+    
+    require_once('../../../lib/functions/date.php');
+    
+    $GLOBALS['time_shift'] = 300;
+    
+    //*******************************************************
+    ($GLOBALS["___mysqli_ston"] = mysqli_connect('localhost', 'root', '')) or die(mysqli_error($GLOBALS["___mysqli_ston"]));
+    mysqli_select_db($GLOBALS["___mysqli_ston"], ecamp) or die(mysqli_error($GLOBALS["___mysqli_ston"]));
+    
+    mysqli_query($GLOBALS["___mysqli_ston"], "SET NAMES 'utf8'");
+    mysqli_query($GLOBALS["___mysqli_ston"], "SET CHARACTER SET 'utf8'");
 
-	require_once( 'data.php' );
-	require_once( 'build.php' );
+    require_once('data.php');
+    require_once('build.php');
 
-	require_once( '../tcpdf/tcpdf.php' );
-	require_once( '../tcpdf/tcpdf_addons.php' );
+    require_once('../tcpdf/tcpdf.php');
+    require_once('../tcpdf/tcpdf_addons.php');
 
-	$print_data = new print_data_class( 14 );	
-	$print_build = new print_build_class( $print_data );
+    $print_data = new print_data_class(14);
+    $print_build = new print_build_class($print_data);
 
-	//$pdf = new FPDF_ADDONS();
-	$pdf = new TCPDF_ADDONS('P', 'mm', 'A4', true, 'UTF-8', false);
-	$pdf->SetAutoPageBreak(true);
+    //$pdf = new FPDF_ADDONS();
+    $pdf = new TCPDF_ADDONS('P', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf->SetAutoPageBreak(true);
 
-	$pdf->SetAuthor( 'ecamp2.pfadiluzern.ch' );
-	$pdf->SetSubject( 'J&S - Programm' );
-	$pdf->SetTitle( 'J&S - Programm' );
+    $pdf->SetAuthor('ecamp2.pfadiluzern.ch');
+    $pdf->SetSubject('J&S - Programm');
+    $pdf->SetTitle('J&S - Programm');
 
-	$pdf->SetFont('helvetica','',12); 
+    $pdf->SetFont('helvetica', '', 12);
 
-	//$print_build->cover->build( $pdf );
-	$print_build->picasso->build( $pdf );
-	
-	//$print_build->daylist->build( $pdf );
-	/*
-	$pdf->Bookmark( 'Tagesübersicht', 0, 0 );
-	
-	foreach( $print_build->data->get_sorted_day() as $day )
-	{
-		$pdf->SetY( $print_build->day->build( $pdf, $day ) );
-		
-		foreach( $day->get_sorted_event_instance() as $event_instance )
-		{	$print_build->event->build( $pdf, $event_instance );	}
-	}
-	
-	$print_build->toc->build( $pdf );
-	*/
-	
-	
-	/*
-	$pdf->addPage();
-	
-	$pdf->writeHTMLCell( 100, 0 , 55, 50, 
-					'asöldkjöalks jölkasjölkj <u>aölksjölkajö lkjöalksjdf</u> öl', 1, 1 );
-					
-	$pdf->write( 10, '----' );
-	*/
-	
-	$pdf->output();
+    //$print_build->cover->build( $pdf );
+    $print_build->picasso->build($pdf);
+    
+    //$print_build->daylist->build( $pdf );
+    /*
+    $pdf->Bookmark( 'Tagesübersicht', 0, 0 );
+
+    foreach( $print_build->data->get_sorted_day() as $day )
+    {
+        $pdf->SetY( $print_build->day->build( $pdf, $day ) );
+
+        foreach( $day->get_sorted_event_instance() as $event_instance )
+        {	$print_build->event->build( $pdf, $event_instance );	}
+    }
+
+    $print_build->toc->build( $pdf );
+    */
+    
+    
+    /*
+    $pdf->addPage();
+
+    $pdf->writeHTMLCell( 100, 0 , 55, 50,
+                    'asöldkjöalks jölkasjölkj <u>aölksjölkajö lkjöalksjdf</u> öl', 1, 1 );
+
+    $pdf->write( 10, '----' );
+    */
+    
+    $pdf->output();

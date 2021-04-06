@@ -50,7 +50,7 @@
                     $_user_camp->load_data(mysqli_fetch_assoc($result));
                     
                     # Besitzer überprüfen
-                    $query = "	SELECT  `camp`.`id` , `is_course`, `type` ,  `creator_user_id` ,  `short_name` ,  `short_prefix` ,  `groups`.`name` 
+                    $query = "SELECT  `camp`.`id` , `is_course`, `type` ,  `creator_user_id` ,  `short_name` ,  `short_prefix` ,  `groups`.`name` 
 								FROM  `camp` 
 								LEFT JOIN  `groups` ON  `groups`.`id` =  `camp`.`group_id` 
 								WHERE  `camp`.`id` ='" . $_camp->id . "'";
@@ -70,7 +70,7 @@
                                 $fnc = "function_camp";
                             }
                             
-                            $query = "	SELECT 
+                            $query = "SELECT 
 											MAX(dropdown.value) as level 
 										FROM 
 											camp, 

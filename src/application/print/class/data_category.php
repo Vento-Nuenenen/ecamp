@@ -18,28 +18,24 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	class print_data_category_class
-	{
-		public $pid;
-		public $id;
-		public $camp_id;
-		public $name;
-		public $short_name;
-		public $color;
-		public $form_type;
+    class print_data_category_class
+    {
+        public $pid;
+        public $id;
+        public $camp_id;
+        public $name;
+        public $short_name;
+        public $color;
+        public $form_type;
 
-		function __construct( $data, $pid )
-		{
-			$this->pid			= $pid;
-			$this->id 			= $data['id'];
-			$this->camp_id 		= $data['camp_id'];
-			$this->name 		= $data['name'];
-			$this->short_name 	= $data['short_name'];
-			$this->color 		= $data['color'];
-			$this->form_type 	= $data['form_type'];
-		}
-		
-		
-	}
-	
-?>
+        public function __construct($data, $pid)
+        {
+            $this->pid			= $pid;
+            $this->id 			= $data['id'];
+            $this->camp_id 		= $data['camp_id'];
+            $this->name 		= $data['name'];
+            $this->short_name 	= $data['short_name'];
+            $this->color 		= $data['color'];
+            $this->form_type 	= $data['form_type'];
+        }
+    }

@@ -18,25 +18,28 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	if( $_camp->is_course )
-		$query_function = "SELECT * FROM dropdown WHERE list = 'function_course' AND value > '0'";
-	else
-		$query_function = "SELECT * FROM dropdown WHERE list = 'function_camp' AND value > '0'";
-			
-	$query_camptype = "SELECT value, entry 	FROM dropdown WHERE list = 'camptype'";
-	
-	$result_function = mysqli_query($GLOBALS["___mysqli_ston"], $query_function);
-	$result_camptype = mysqli_query($GLOBALS["___mysqli_ston"], $query_camptype);
-	
-	$ans_function = array();
-	$ans_camptype = array();
-	
-	while( $row = mysqli_fetch_assoc($result_function) )
-	{	$ans_function[] = $row;	}
-	
-	while( $row = mysqli_fetch_assoc($result_camptype) )
-	{	$ans_camptype[] = $row;	}
+    if ($_camp->is_course) {
+        $query_function = "SELECT * FROM dropdown WHERE list = 'function_course' AND value > '0'";
+    } else {
+        $query_function = "SELECT * FROM dropdown WHERE list = 'function_camp' AND value > '0'";
+    }
+            
+    $query_camptype = "SELECT value, entry 	FROM dropdown WHERE list = 'camptype'";
+    
+    $result_function = mysqli_query($GLOBALS["___mysqli_ston"], $query_function);
+    $result_camptype = mysqli_query($GLOBALS["___mysqli_ston"], $query_camptype);
+    
+    $ans_function = array();
+    $ans_camptype = array();
+    
+    while ($row = mysqli_fetch_assoc($result_function)) {
+        $ans_function[] = $row;
+    }
+    
+    while ($row = mysqli_fetch_assoc($result_camptype)) {
+        $ans_camptype[] = $row;
+    }
 
-	$ans = array("function_list" => $ans_function, "camptype_list" => $ans_camptype);
-	echo json_encode($ans);
-	die();
+    $ans = array("function_list" => $ans_function, "camptype_list" => $ans_camptype);
+    echo json_encode($ans);
+    die();

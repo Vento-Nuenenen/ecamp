@@ -18,10 +18,10 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$camp_del_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['camp_del_id']);
-	
-	$query = "SELECT * FROM camp WHERE id = '$camp_del_id'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	$camp_detail = mysqli_fetch_assoc($result);
-	
-	$index_content['main'] .= gettemplate_app('del_camp', $camp_detail);
+    $camp_del_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['camp_del_id']);
+    
+    $query = "SELECT * FROM camp WHERE id = '$camp_del_id'";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $camp_detail = mysqli_fetch_assoc($result);
+    
+    $index_content['main'] .= gettemplate_app('del_camp', $camp_detail);

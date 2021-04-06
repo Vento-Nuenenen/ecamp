@@ -18,23 +18,23 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['event_id'] );
-	
-	$_camp->event( $event_id ) || die( "error" );
+    $event_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_id']);
+    
+    $_camp->event($event_id) || die("error");
 
-	$query = "	SELECT
+    $query = "SELECT
 					count(*)
 				FROM
 					event_detail
 				WHERE
 					event_id = '$event_id'";
-	
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$count = mysqli_result( $result,  0 );
-	
-	$count++;
-	
-	$query = "	INSERT INTO
+    
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $count = mysqli_result($result, 0);
+    
+    $count++;
+    
+    $query = "INSERT INTO
 					event_detail
 				(
 					`event_id`,
@@ -46,10 +46,10 @@
 					'$count'
 				)";
 
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$event_detail_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
-	
-	
-	$ans = array( "error" => false, "event_detail_id" => $event_detail_id );
-	echo json_encode( $ans );
-	die();
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $event_detail_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
+    
+    
+    $ans = array( "error" => false, "event_detail_id" => $event_detail_id );
+    echo json_encode($ans);
+    die();

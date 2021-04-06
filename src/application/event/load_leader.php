@@ -18,7 +18,7 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$query = "	SELECT
+    $query = "SELECT
 					user.id,
 					user.scoutname,
 					user.firstname,
@@ -44,18 +44,18 @@
 					dropdown.entry != 'Support' AND
 					user.id = user_camp.user_id AND
 					user_camp.camp_id = $_camp->id";
-					
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$leaders = array();
-	
-	while( $leader = mysqli_fetch_assoc( $result ) )
-	{
-		if( $leader['scoutname'] == "" )
-		{	$leader['displayname'] = $leader['firstname'] . " " . $leader['surname'];	}
-		else
-		{	$leader['displayname'] = $leader['scoutname'];	}
-		
-		$leaders[] = $leader;
-	}
-	
-	$_page->html->set( 'leaders', $leaders );
+                    
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $leaders = array();
+    
+    while ($leader = mysqli_fetch_assoc($result)) {
+        if ($leader['scoutname'] == "") {
+            $leader['displayname'] = $leader['firstname'] . " " . $leader['surname'];
+        } else {
+            $leader['displayname'] = $leader['scoutname'];
+        }
+        
+        $leaders[] = $leader;
+    }
+    
+    $_page->html->set('leaders', $leaders);

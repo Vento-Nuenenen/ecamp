@@ -18,57 +18,55 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	/*
-		[ 
-			{ tag: 'optgroup', label: 'Leiter:', options:
-				[
-					{ tag: 'option', value: '2', html:'Forte' }, 
-					{ tag: 'option', value: '2', html:'Smiley' } 
-				]
-			},
-			{ tag: 'optgroup', label: 'Einkaufslisten:', options:
-				[
-					{ tag: 'option', value: '2', html:'Baumarkt' }, 
-					{ tag: 'option', value: '2', html:'Lebensmittelmarkt' } 
-				]
-			}
-		]
-	*/
-	
-	$options = array();
-	$users = array();
-	$mat_lists = array();
-	
-	$query = "	SELECT
+    /*
+        [
+            { tag: 'optgroup', label: 'Leiter:', options:
+                [
+                    { tag: 'option', value: '2', html:'Forte' },
+                    { tag: 'option', value: '2', html:'Smiley' }
+                ]
+            },
+            { tag: 'optgroup', label: 'Einkaufslisten:', options:
+                [
+                    { tag: 'option', value: '2', html:'Baumarkt' },
+                    { tag: 'option', value: '2', html:'Lebensmittelmarkt' }
+                ]
+            }
+        ]
+    */
+    
+    $options = array();
+    $users = array();
+    $mat_lists = array();
+    
+    $query = "SELECT
 					user.*
 				FROM
 					user, user_camp
 				WHERE
 					user.id = user_camp.user_id AND
 					user_camp.camp_id = $_camp->id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	while( $u = mysqli_fetch_assoc( $result ) )
-	{
-		$user = array( "tag" => "option", "value" => "user_" . $u['id'], "html" => htmlentities_utf8($u['scoutname']) );
-		$users[] = $user;
-	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    while ($u = mysqli_fetch_assoc($result)) {
+        $user = array( "tag" => "option", "value" => "user_" . $u['id'], "html" => htmlentities_utf8($u['scoutname']) );
+        $users[] = $user;
+    }
 
-	$query = "	SELECT
+    $query = "SELECT
 					mat_list.*
 				FROM
 					mat_list
 				WHERE
 					mat_list.camp_id = $_camp->id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	while( $m = mysqli_fetch_assoc( $result ) )
-	{
-		$mat_list = array( "tag" => "option", "value" => "mat_list_" . $m['id'], "html" => htmlentities_utf8($m['name']) );
-		$mat_lists[] = $mat_list;
-	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    while ($m = mysqli_fetch_assoc($result)) {
+        $mat_list = array( "tag" => "option", "value" => "mat_list_" . $m['id'], "html" => htmlentities_utf8($m['name']) );
+        $mat_lists[] = $mat_list;
+    }
 
-	$options[] = array( "tag" => "optgroup", "label" => "Leiter:", "options" => $users );
-	$options[] = array( "tag" => "optgroup", "label" => "Einkaufslisten:", "options" => $mat_lists );
+    $options[] = array( "tag" => "optgroup", "label" => "Leiter:", "options" => $users );
+    $options[] = array( "tag" => "optgroup", "label" => "Einkaufslisten:", "options" => $mat_lists );
 
-	$_js_env->add( 'mat_organize_resp', $options );	
+    $_js_env->add('mat_organize_resp', $options);

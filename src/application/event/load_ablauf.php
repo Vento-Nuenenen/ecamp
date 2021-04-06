@@ -18,7 +18,7 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$query = "	SELECT
+    $query = "SELECT
 					id,
 					time,
 					content,
@@ -29,10 +29,11 @@
 					event_id = $event_id
 				ORDER BY
 					sorting ASC";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	$details = array();
-	
-	while( $detail = mysqli_fetch_assoc( $result ) )
-	{	$details[] = $detail;	}
-	
-	$_page->html->set( 'details', $details );
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $details = array();
+    
+    while ($detail = mysqli_fetch_assoc($result)) {
+        $details[] = $detail;
+    }
+    
+    $_page->html->set('details', $details);

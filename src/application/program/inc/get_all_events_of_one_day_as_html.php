@@ -18,22 +18,20 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	include_once($GLOBALS['app_dir'] . "/" . $app . "/lib/event2html.php");
-	
-	class event
-	{
-		var $starttime;
-		var $length;
-		var $data = array();
-		
-	}
-	
-	function get_all_events_of_one_day_as_html( $this_day_id, $this_day_nr )
-	{
-		// Tagesnummer herausfinden
-		if( $this_day_nr == "" )
-		{
-			$query = "SELECT 
+    include_once($GLOBALS['app_dir'] . "/" . $app . "/lib/event2html.php");
+    
+    class event
+    {
+        public $starttime;
+        public $length;
+        public $data = array();
+    }
+    
+    function get_all_events_of_one_day_as_html($this_day_id, $this_day_nr)
+    {
+        // Tagesnummer herausfinden
+        if ($this_day_nr == "") {
+            $query = "SELECT 
 						((
 							SELECT 
 								count(*) 
@@ -51,14 +49,14 @@
 					WHERE 
                         day.id=$this_day_id AND
                         day.subcamp_id=subcamp.id";
-	
-			$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-			$result = mysqli_fetch_assoc($result);
-			$this_day_nr = $result['daynr'];
-		}
-		
-		$events = "";
-		$event_query = "SELECT 
+    
+            $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+            $result = mysqli_fetch_assoc($result);
+            $this_day_nr = $result['daynr'];
+        }
+        
+        $events = "";
+        $event_query = "SELECT 
 							event.id,
 							event.name,
 							event.responsible,
@@ -82,84 +80,83 @@
 							event_instance.day_id = $this_day_id AND
 							event_instance.event_id = event.id
 						ORDER BY starttime ASC, length DESC, id DESC ";
-		
-		$event_result = mysqli_query($GLOBALS["___mysqli_ston"], $event_query);
-		$event_nr = 0;
-		
-		$rows = array();
-		$count = array();
-		
-		//$all_events = array();
-		$events = "";
-		
-		while($event = mysqli_fetch_assoc($event_result))
-		{
-			//$all_events[$event[id]] = $event;
-			
-			$row = 1;
-			while($rows[$row][count($rows[$row])]->starttime + $rows[$row][count($rows[$row])]->length > $event['starttime'])
-			{
-				$row++;
-				if(!is_array($rows[$row]))
-				{	$rows[$row] = array();	}
-			}
-			
-			//$all_events[$event[id]][row] = $row;
-			
-			$rows[$row][count($rows[$row]) + 1] = new event();
-			$rows[$row][count($rows[$row])]->starttime 	= $event['starttime'];
-			$rows[$row][count($rows[$row])]->length		= $event['length'];
-			$rows[$row][count($rows[$row])]->data		= $event;
-			$rows[$row][count($rows[$row])]->data['row'] 	= $row;
-			
-			for($time = $event['starttime']; $time < $event['starttime'] + $event['length']; $time++)
-			{	$count[$time]++;	}
-		}
-		
-		//print_r($rows);
-		//echo "-- new day --";
-		
-		foreach ($rows as $list_of_events)
-		{
-			foreach ($list_of_events as $event)
-			{
-				$max_row = 1;
-				for($time = $event->starttime; $time < $event->starttime + $event->length; $time++)
-				{	$max_row = max($max_row, $count[$time]);	}
-				
-				$event->data['max_row'] = $max_row;
-				
-				$events .= event2html( $event->data, $event->data['eventnr'], $this_day_nr );
-				
-				//print_r($event->data);
-			}
-		}
-		
-		/*
-		foreach ($all_events as $event)
-		{
-			$max_row = 1;
-			for($time = $event[starttime]; $time < $event[starttime] + $event[length]; $time++)
-			{	$max_row = max($max_row, $count[$time]);	}
-			
-			$event[max_row] = $max_row;
-			
-			
-			$events .= event2html( $event, $event[eventnr], $this_day_nr );
-			
-			//print_r($event);
-		}*/
-		
-		//print_r($all_events);
-		
-		
-		
-		/*
-		// alle Events durchlaufen
-		while($event = mysql_fetch_assoc($event_result))
-		{
-			$events .= event2html( $event, $event[eventnr], $this_day_nr );
-		}*/
-		
-		return $events;		
-	}
+        
+        $event_result = mysqli_query($GLOBALS["___mysqli_ston"], $event_query);
+        $event_nr = 0;
+        
+        $rows = array();
+        $count = array();
+        
+        //$all_events = array();
+        $events = "";
+        
+        while ($event = mysqli_fetch_assoc($event_result)) {
+            //$all_events[$event[id]] = $event;
+            
+            $row = 1;
+            while ($rows[$row][count($rows[$row])]->starttime + $rows[$row][count($rows[$row])]->length > $event['starttime']) {
+                $row++;
+                if (!is_array($rows[$row])) {
+                    $rows[$row] = array();
+                }
+            }
+            
+            //$all_events[$event[id]][row] = $row;
+            
+            $rows[$row][count($rows[$row]) + 1] = new event();
+            $rows[$row][count($rows[$row])]->starttime 	= $event['starttime'];
+            $rows[$row][count($rows[$row])]->length		= $event['length'];
+            $rows[$row][count($rows[$row])]->data		= $event;
+            $rows[$row][count($rows[$row])]->data['row'] 	= $row;
+            
+            for ($time = $event['starttime']; $time < $event['starttime'] + $event['length']; $time++) {
+                $count[$time]++;
+            }
+        }
+        
+        //print_r($rows);
+        //echo "-- new day --";
+        
+        foreach ($rows as $list_of_events) {
+            foreach ($list_of_events as $event) {
+                $max_row = 1;
+                for ($time = $event->starttime; $time < $event->starttime + $event->length; $time++) {
+                    $max_row = max($max_row, $count[$time]);
+                }
+                
+                $event->data['max_row'] = $max_row;
+                
+                $events .= event2html($event->data, $event->data['eventnr'], $this_day_nr);
+                
+                //print_r($event->data);
+            }
+        }
+        
+        /*
+        foreach ($all_events as $event)
+        {
+            $max_row = 1;
+            for($time = $event[starttime]; $time < $event[starttime] + $event[length]; $time++)
+            {	$max_row = max($max_row, $count[$time]);	}
+
+            $event[max_row] = $max_row;
+
+
+            $events .= event2html( $event, $event[eventnr], $this_day_nr );
+
+            //print_r($event);
+        }*/
+        
+        //print_r($all_events);
+        
+        
+        
+        /*
+        // alle Events durchlaufen
+        while($event = mysql_fetch_assoc($event_result))
+        {
+            $events .= event2html( $event, $event[eventnr], $this_day_nr );
+        }*/
+        
+        return $events;
+    }

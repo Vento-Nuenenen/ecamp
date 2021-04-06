@@ -18,29 +18,29 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$scoutname	= $_REQUEST['scoutname'];
-	$firstname	= $_REQUEST['firstname'];
-	$surname	= $_REQUEST['surname'];
-	
-	$street		= $_REQUEST['street'];
-	$zipcode	= $_REQUEST['zipcode'];
-	$city		= $_REQUEST['city'];
-	
-	$mobilnr	= $_REQUEST['mobilnr'];
-	$homenr		= $_REQUEST['homenr'];
-	
-	$ahv		= $_REQUEST['ahv'];
-	$birthday	= $_REQUEST['birthday'];
-	$jsedu		= $_REQUEST['jsedu'];
-	$pbsedu		= $_REQUEST['pbsedu'];
-	$jspersnr	= $_REQUEST['jspersnr'];
-	$sex		= $_REQUEST['sex'];
-	
-	$id 		= $_REQUEST['id'];
-	
-	$birthday = strtotime(preg_replace("/^\s*([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", "\\2/\\1/\\3", $birthday));
-	
-	$query = "UPDATE user SET 
+    $scoutname	= $_REQUEST['scoutname'];
+    $firstname	= $_REQUEST['firstname'];
+    $surname	= $_REQUEST['surname'];
+    
+    $street		= $_REQUEST['street'];
+    $zipcode	= $_REQUEST['zipcode'];
+    $city		= $_REQUEST['city'];
+    
+    $mobilnr	= $_REQUEST['mobilnr'];
+    $homenr		= $_REQUEST['homenr'];
+    
+    $ahv		= $_REQUEST['ahv'];
+    $birthday	= $_REQUEST['birthday'];
+    $jsedu		= $_REQUEST['jsedu'];
+    $pbsedu		= $_REQUEST['pbsedu'];
+    $jspersnr	= $_REQUEST['jspersnr'];
+    $sex		= $_REQUEST['sex'];
+    
+    $id 		= $_REQUEST['id'];
+    
+    $birthday = strtotime(preg_replace("/^\s*([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", "\\2/\\1/\\3", $birthday));
+    
+    $query = "UPDATE user SET 
 				scoutname 	= '$scoutname',
 				firstname 	= '$firstname',
 				surname 	= '$surname',
@@ -62,9 +62,8 @@
 			WHERE 
 				id = '$id'
 			LIMIT 1";
-	
-	mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	
-	header("Location: index.php?app=leader");
-	die();
-	
+    
+    mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    header("Location: index.php?app=leader");
+    die();

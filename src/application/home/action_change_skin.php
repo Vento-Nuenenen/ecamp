@@ -18,8 +18,8 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$skin 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['skin']);
-	$_SESSION['skin'] = $skin;
-	
-	header("location:index.php?app=home");
-	die();
+    $skin 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['skin']);
+    $_SESSION['skin'] = $skin;
+    
+    header("location:index.php?app=home");
+    die();

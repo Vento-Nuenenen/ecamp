@@ -18,34 +18,33 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$file_type['image/jpeg'] = 'icon_img.png';
-	$file_type['image/gif'] = 'icon_img.png';
-	
-	$file_type['application/pdf'] = 'icon_pdf.png';
-	$file_type['application/msword'] = 'icon_doc.png';
-	$file_type['application/vnd.ms-excel'] = 'icon_xls.png';
+    $file_type['image/jpeg'] = 'icon_img.png';
+    $file_type['image/gif'] = 'icon_img.png';
+    
+    $file_type['application/pdf'] = 'icon_pdf.png';
+    $file_type['application/msword'] = 'icon_doc.png';
+    $file_type['application/vnd.ms-excel'] = 'icon_xls.png';
 
-	$query = "	SELECT
-					*
+    $query = "SELECT *
 				FROM
 					event_document
 				WHERE
 					event_id = $event_id";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	$documents = array();
-	while( $document = mysqli_fetch_assoc( $result ) )
-	{
-		if( $file_type[$document['type']] )
-		{	$document['type_img_src'] = "public/global/img/" . $file_type[$document['type']];	}
-		else
-		{	$document['type_img_src'] = "public/global/img/icon_unknown.png";	}
-		
-		$document['download_link'] = "index.php?app=event&cmd=file_download&file_id=" . $document['id'];
-		
-		$documents[] = $document;
-	}
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    $documents = array();
+    while ($document = mysqli_fetch_assoc($result)) {
+        if ($file_type[$document['type']]) {
+            $document['type_img_src'] = "public/global/img/" . $file_type[$document['type']];
+        } else {
+            $document['type_img_src'] = "public/global/img/icon_unknown.png";
+        }
+        
+        $document['download_link'] = "index.php?app=event&cmd=file_download&file_id=" . $document['id'];
+        
+        $documents[] = $document;
+    }
 
-	$_page->html->set( 'documents', $documents );
-	
-	//print_r( $documents );
+    $_page->html->set('documents', $documents);
+    
+    //print_r( $documents );

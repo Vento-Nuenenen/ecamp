@@ -18,13 +18,14 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
-	
-	$query = "SELECT id, scoutname, firstname FROM user WHERE id = '$id'";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	$user_option = mysqli_fetch_assoc($result);
-	
-	if(empty($user_option['scoutname']))	{	$user_option['scoutname'] = $user_option['firstname'];	}
+    $id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['id']);
+    
+    $query = "SELECT id, scoutname, firstname FROM user WHERE id = '$id'";
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    $user_option = mysqli_fetch_assoc($result);
+    
+    if (empty($user_option['scoutname'])) {
+        $user_option['scoutname'] = $user_option['firstname'];
+    }
 
-	$index_content['main'] .= gettemplate_app('user_option', $user_option);
-	
+    $index_content['main'] .= gettemplate_app('user_option', $user_option);

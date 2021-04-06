@@ -18,38 +18,35 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	// Camp-ID neu setzten
-	// --> Die Authentifizierung ob überhaupt erlaubt findet erst nach der Weiterleitung statt
-	//
-	if( isset( $_REQUEST['camp']) )
-	{
-		$camp = $_REQUEST['camp'];
-		
-		if( $camp == "old_camp" )
-		{
-			header("Location: index.php?app=camp_admin");
-			die();
-		}
-		
-		$result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id FROM user_camp WHERE user_id='$_user->id' AND camp_id='$camp'");
-		
-		if( mysqli_num_rows($result) == 0 )
-		{
-			header("Location: index.php?app=home");
-			die();
-		}
+    // Camp-ID neu setzten
+    // --> Die Authentifizierung ob überhaupt erlaubt findet erst nach der Weiterleitung statt
+    //
+    if (isset($_REQUEST['camp'])) {
+        $camp = $_REQUEST['camp'];
+        
+        if ($camp == "old_camp") {
+            header("Location: index.php?app=camp_admin");
+            die();
+        }
+        
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id FROM user_camp WHERE user_id='$_user->id' AND camp_id='$camp'");
+        
+        if (mysqli_num_rows($result) == 0) {
+            header("Location: index.php?app=home");
+            die();
+        }
 
-		//echo $_SESSION['camp_id'];
-		
-		$_SESSION['camp_id'] = $camp;
-		
-		//echo $_SESSION['camp_id'];
-		
-		$query = "UPDATE user SET last_camp = '$camp' WHERE id = '" . $_user->id . "'";
+        //echo $_SESSION['camp_id'];
+        
+        $_SESSION['camp_id'] = $camp;
+        
+        //echo $_SESSION['camp_id'];
+        
+        $query = "UPDATE user SET last_camp = '$camp' WHERE id = '" . $_user->id . "'";
 
-		//echo $query;
-		mysqli_query($GLOBALS["___mysqli_ston"], $query);
-	}
-	
-	header("Location: index.php?app=camp&cmd=home");
-	die();
+        //echo $query;
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    }
+    
+    header("Location: index.php?app=camp&cmd=home");
+    die();

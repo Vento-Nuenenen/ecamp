@@ -20,14 +20,14 @@
 
     // Input validieren & interpretieren
     $change_start = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['subcamp_start']);
-    $change_end   = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['subcamp_end']);
+    $change_end = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['subcamp_end']);
     $subcamp_change_id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['subcamp_id']);
     
     $change_start = preg_match("/([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", $change_start, $regs);
     $change_start = gmmktime(0, 0, 0, $regs[2], $regs[1], $regs[3]);
     
-    $change_end   = preg_match("/([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", $change_end, $regs);
-    $change_end   = gmmktime(0, 0, 0, $regs[2], $regs[1], $regs[3]);
+    $change_end = preg_match("/([0-9]{1,2})[\/\. -]+([0-9]{1,2})[\/\. -]+([0-9]{1,4})/", $change_end, $regs);
+    $change_end = gmmktime(0, 0, 0, $regs[2], $regs[1], $regs[3]);
 
     $_camp->subcamp($subcamp_change_id) || die("error");
     
@@ -110,8 +110,8 @@
       // Zusätzliche Tage vorne hinzufügen
       if ($start < $subcamp['start']) {
           for ($i=0; $i < ($subcamp['start'] - $start); $i++) {
-              $query = "INSERT INTO day 	    ( subcamp_id, day_offset)
-				 	  VALUES 				( '$subcamp[id]', '$i')";
+              $query = "INSERT INTO day ( subcamp_id, day_offset)
+				 	                  VALUES ( '$subcamp[id]', '$i')";
               mysqli_query($GLOBALS["___mysqli_ston"], $query);
           }
       }
@@ -119,8 +119,8 @@
       // Zustäzliche Tage hinten hinzufügen
       if ($end > $subcamp['end']) {
           for ($i=($subcamp['end']-$start+1); $i <= ($end - $start); $i++) {
-              $query = "INSERT INTO day 	    ( subcamp_id, day_offset)
-				 	  VALUES 				( '$subcamp[id]', '$i')";
+              $query = "INSERT INTO day ( subcamp_id, day_offset)
+				 	                  VALUES ( '$subcamp[id]', '$i')";
               mysqli_query($GLOBALS["___mysqli_ston"], $query);
           }
       }

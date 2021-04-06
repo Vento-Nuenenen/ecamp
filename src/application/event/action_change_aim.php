@@ -18,31 +18,27 @@
  * along with eCamp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	$event_id 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['event_id'] );
-	$input_edit	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $_REQUEST['input_edit'] );
-	$input_edit_js	=  $_REQUEST['input_edit'] ;
-	
-	$_camp->event( $event_id ) || die( "error" );
-	
-	$query = "
-				UPDATE
+    $event_id 	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['event_id']);
+    $input_edit	= mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_REQUEST['input_edit']);
+    $input_edit_js	=  $_REQUEST['input_edit'] ;
+    
+    $_camp->event($event_id) || die("error");
+    
+    $query = "UPDATE
 					event
 				SET
 					aim = '" . $input_edit . "'
 				WHERE
 					event.id = $event_id";
-	//echo $query;
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
-	
-	if( $result )
-	{
-		$ans = array( "saved" => true, "value" => $input_edit_js );
-		echo json_encode( $ans );
-		die();
-	}
-	else
-	{
-		$ans = array( "saved" => false );
-		echo json_encode( $ans );
-		die();
-	}
+    //echo $query;
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    
+    if ($result) {
+        $ans = array( "saved" => true, "value" => $input_edit_js );
+        echo json_encode($ans);
+        die();
+    } else {
+        $ans = array( "saved" => false );
+        echo json_encode($ans);
+        die();
+    }
