@@ -4,3 +4,4 @@ src/config/config.local.php
 vendor
 src/public/webgrind
 src/public/phpinfo.php
+.php_cs.cache
