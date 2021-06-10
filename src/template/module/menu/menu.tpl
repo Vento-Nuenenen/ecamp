@@ -1,19 +1,4 @@
 <span metal:define-macro="menu" tal:omit-tag="">
-    <!--
-    <form action="index.php" style="margin-bottom:4px;" class="admin_menu hidden">
-        <select onChange="this.form.submit()" name="skin">
-            <option></option>
-			<option value="skin1">skin1</option>
-            <option value="skin2">skin2</option>
-            <option value="skin3">skin3</option>
-		</select>
-        <input type="hidden" name="app" value="home" />
-        <input type="hidden" name="cmd" value="action_change_skin" />
-    </form>
-    -->
-    
-    
-    
     <span tal:condition="user/admin" tal:omit-tag="" >
         <div class="menu hidden menu_box admin_menu" align="left">
           <a  href="index.php?app=db&cmd=statistics">Statistik</a><br />
@@ -21,9 +6,7 @@
           <a  href="index.php?app=support">Support</a><br />
         </div>
 	</span>
-	
-	
-	
+
     <div class="menu menu_box" align="left">
           <a href="index.php" tal:attributes="class php: app=='home' && cmd=='home'?'actual_menu':''">Home</a><br />
           <a href="index.php?app=invent" tal:attributes="class php: app=='invent'?'actual_menu':''">Einladen</a><br />
@@ -80,7 +63,12 @@
             
             <div class="menu_group">
 		        <a href="index.php?app=day" tal:attributes="class php: app=='day'?'actual_menu':''">Tages&uuml;bersicht</a><br />
-	            <a href="index.php?app=program" tal:attributes="class php: app=='program'?'actual_menu':''">Programm</a><br />
+	            <a href="index.php?app=program" tal:attributes="class php: app=='program'?'actual_menu':''">Programm</a>
+                <tal:block condition="php: user_camp.auth_level >= 50">
+                    <div class="menu_group">
+                        <a href="index.php?app=analytics" tal:attributes="class php: app=='analytics'?'actual_menu':''">Analyse</a><br />
+                    </div>
+                </tal:block>
 	        </div>
 	        
             <div class="menu_group">
@@ -88,12 +76,5 @@
 				<a href="index.php?app=print" tal:attributes="class php: app=='print'?'actual_menu':''">PDF Drucken</a><br />
         	</div>
         </div>
-<!--        
-        <div class="menu_title">PDF/Drucken:</div>
-        <div class="menu menu_box" align="left">
-			<a  href="index.php?app=print&cmd=g_program">Grobprogramm</a><br />
-			<a  href="#">Materialliste</a>  
-        </div>
--->
     </span>
 </span>
