@@ -90,7 +90,8 @@
   
     // Liste aller erlaubten Applikationen       z.B. index.php?app=home    (später in DB)
     $valid_app = array(
-  	    'invent',
+      'analytics',
+      'invent',
 	    'camp',
 	    'camp_admin',
 	    'day',
